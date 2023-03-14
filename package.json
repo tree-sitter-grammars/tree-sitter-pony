@@ -1,0 +1,42 @@
+{
+  "name": "tree-sitter-pony",
+  "version": "0.0.1",
+  "description": "Pony grammar for tree-sitter",
+  "main": "bindings/node",
+  "keywords": [
+    "parser",
+    "lexer",
+    "pony"
+  ],
+  "author": "Amaan Qureshi <amaanq12@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amaanq/tree-sitter-pony/issues"
+  },
+  "homepage": "https://github.com/amaanq/tree-sitter-pony#readme",
+  "dependencies": {
+    "nan": "^2.17.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-google": "^0.14.0",
+    "tree-sitter-cli": "^0.20.7"
+  },
+  "repository": "https://github.com/amaanq/tree-sitter-pony",
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp build",
+    "lint": "eslint grammar.js",
+    "parse": "tree-sitter parse",
+    "test": "tree-sitter test && script/parse-examples",
+    "test-windows": "tree-sitter test"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.pony",
+      "injection-regex": "pony",
+      "file-types": [
+        "pony"
+      ]
+    }
+  ]
+}
