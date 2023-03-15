@@ -28,11 +28,23 @@
         "named": true
       },
       {
+        "type": "compile_error",
+        "named": true
+      },
+      {
+        "type": "compile_intrinsic",
+        "named": true
+      },
+      {
         "type": "consume_expression",
         "named": true
       },
       {
         "type": "continue_statement",
+        "named": true
+      },
+      {
+        "type": "error",
         "named": true
       },
       {
@@ -817,6 +829,21 @@
         },
         {
           "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "compile_error",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -2237,6 +2264,25 @@
     }
   },
   {
+    "type": "with_elem",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "with_statement",
     "named": true,
     "fields": {},
@@ -2245,11 +2291,15 @@
       "required": true,
       "types": [
         {
+          "type": "annotation",
+          "named": true
+        },
+        {
           "type": "do_block",
           "named": true
         },
         {
-          "type": "expression",
+          "type": "with_elem",
           "named": true
         }
       ]
@@ -2544,6 +2594,14 @@
     "named": true
   },
   {
+    "type": "compile_error",
+    "named": false
+  },
+  {
+    "type": "compile_intrinsic",
+    "named": true
+  },
+  {
     "type": "consume",
     "named": false
   },
@@ -2574,6 +2632,10 @@
   {
     "type": "end",
     "named": false
+  },
+  {
+    "type": "error",
+    "named": true
   },
   {
     "type": "escape_sequence",

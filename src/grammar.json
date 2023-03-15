@@ -2237,8 +2237,53 @@
         {
           "type": "SYMBOL",
           "name": "none"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "error"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "compile_intrinsic"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "compile_error"
         }
       ]
+    },
+    "error": {
+      "type": "STRING",
+      "value": "error"
+    },
+    "compile_intrinsic": {
+      "type": "STRING",
+      "value": "compile_intrinsic"
+    },
+    "compile_error": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "compile_error"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "string"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
     },
     "unary_expression": {
       "type": "PREC_LEFT",
@@ -4647,6 +4692,23 @@
         }
       ]
     },
+    "with_elem": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "block"
+        }
+      ]
+    },
     "with_statement": {
       "type": "SEQ",
       "members": [
@@ -4655,8 +4717,41 @@
           "value": "with"
         },
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "annotation"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "with_elem"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "with_elem"
+                  }
+                ]
+              }
+            }
+          ]
         },
         {
           "type": "SYMBOL",

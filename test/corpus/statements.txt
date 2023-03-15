@@ -1,0 +1,55 @@
+==============
+With Statement
+==============
+
+primitive ContainsWith
+  fun function() =>
+    with obj = SomeObjectThatNeedsDisposing(), other = SomeOtherDisposableObject() do
+      // use obj
+      obj.call(other)?
+    else
+      None
+    end
+
+---
+
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (with_statement
+          (with_elem
+            (identifier)
+            (block
+              (call_expression callee: (identifier))
+            )
+          )
+          (with_elem
+            (identifier)
+            (block
+              (call_expression callee: (identifier))
+            )
+          )
+          (do_block
+            (comment)
+            (block
+              (call_expression
+                callee: (member_expression
+                  (identifier)
+                  (identifier)
+                )
+                (identifier)
+              )
+            )
+            (else_block
+              (block (none))
+            )
+          )
+        )
+      )
+    )
+  )
+)

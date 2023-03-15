@@ -359,7 +359,14 @@ module.exports = grammar({
       $.ffi_identifier,
       $.this,
       $.none,
+      $.error,
+      $.compile_intrinsic,
+      $.compile_error,
     ),
+
+    error: _ => 'error',
+    compile_intrinsic: $ => 'compile_intrinsic',
+    compile_error: $ => prec.left(seq('compile_error', optional($.string))),
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
       field('operator', choice('-', 'not', '-~', 'addressof', 'digestof')),
@@ -551,11 +558,15 @@ module.exports = grammar({
       optional($.then_block),
       'end',
     ),
-
+    with_elem: $ => seq(
+      $.identifier,
+      '=',
+      $.block
+    ),
     with_statement: $ => seq(
       'with',
-      // TODO: add with exprs `with a = initializer(), b = initializer() do ... end`
-      $.expression,
+      optional($.annotation),
+      commaSep1($.with_elem),
       $.do_block,
     ),
 
