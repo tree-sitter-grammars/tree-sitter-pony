@@ -191,7 +191,7 @@ module.exports = grammar({
       $.parameters,
       optional('?'),
       optional(choice(
-        seq('=>', repeat1($.expression)),
+        seq('=>', $.block),
         $.string,
       )),
     ),
@@ -207,7 +207,7 @@ module.exports = grammar({
       optional(seq(':', field('returns', $.type))),
       optional('?'),
       optional(choice(
-        seq('=>', repeat1($.expression)),
+        seq('=>', $.block),
         $.string,
       )),
     ),
@@ -220,7 +220,7 @@ module.exports = grammar({
       optional($.generic_parameters),
       $.parameters,
       optional(choice(
-        seq('=>', repeat1($.expression)),
+        seq('=>', $.block),
         $.string,
       )),
     ),
@@ -313,16 +313,19 @@ module.exports = grammar({
       optional('@'),
       '{',
       optional($.capability),
+      optional($.identifier),
+      optional(alias($.generic_parameters, $.type_parameters)),
       '(',
       commaSep($.type),
       ')',
       optional(seq(':', $.type)),
       optional('?'),
-      optional(seq('=>', $.type)),
       '}',
     ),
 
     member_type: $ => prec.right(seq($.identifier, '.', $.type)),
+
+    block: $ => prec.left(seq($.expression, repeat(seq(optional(';'), $.expression)))),
 
     expression: $ => choice(
       $.unary_expression,
@@ -391,11 +394,10 @@ module.exports = grammar({
       ')',
     )),
 
-    assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
+    assignment_expression: $ => prec.left(PREC.ASSIGNMENT, seq(
       $.expression,
       '=',
-      $.expression,
-      optional(';'),
+      $.block,
     )),
 
     variable_declaration: $ => prec.right(seq(
@@ -417,7 +419,6 @@ module.exports = grammar({
       optional($.named_arguments),
       ')',
       optional('?'),
-      optional(';'),
     )),
     named_arguments: $ => seq(
       'where',
@@ -435,19 +436,20 @@ module.exports = grammar({
       optional(seq(':', $.type)),
       optional('?'),
       '=>',
-      repeat(seq($.expression, optional(';'))),
+      $.block,
       '}',
       optional($.capability),
     ),
     lambda_parameter: $ => seq(
       $.identifier,
       optional(seq(':', $.type)),
-      optional(seq('=', $.literal)),
+      optional(seq('=', $.expression)),
     ),
     lambda_captures: $ => seq(
       '(',
       commaSep(seq(
         $.identifier,
+        optional(seq(':', $.type)),
         optional(seq('=', $.expression)),
       )),
       ')',
@@ -486,19 +488,19 @@ module.exports = grammar({
     if_block: $ => seq(
       choice('if', 'ifdef'),
       optional($.annotation),
-      $.expression,
+      $.block,
     ),
 
     then_block: $ => seq(
       'then',
       optional($.annotation),
-      repeat($.expression),
+      $.block,
     ),
 
     elseif_block: $ => seq(
       'elseif',
       optional($.annotation),
-      $.expression,
+      $.block,
       $.then_block,
     ),
 
@@ -523,7 +525,7 @@ module.exports = grammar({
     else_block: $ => seq(
       'else',
       optional($.annotation),
-      repeat1($.expression),
+      $.block,
     ),
 
     for_statement: $ => seq(
@@ -544,7 +546,7 @@ module.exports = grammar({
     try_statement: $ => seq(
       'try',
       optional($.annotation),
-      repeat(seq($.expression, optional(';'))),
+      $.block,
       optional($.else_block),
       optional($.then_block),
       'end',
@@ -552,6 +554,7 @@ module.exports = grammar({
 
     with_statement: $ => seq(
       'with',
+      // TODO: add with exprs `with a = initializer(), b = initializer() do ... end`
       $.expression,
       $.do_block,
     ),
@@ -559,7 +562,7 @@ module.exports = grammar({
     repeat_statement: $ => seq(
       'repeat',
       optional($.annotation),
-      repeat1($.expression),
+      $.block,
       'until',
       optional($.annotation),
       $.expression,
@@ -569,7 +572,7 @@ module.exports = grammar({
 
     do_block: $ => seq(
       'do',
-      repeat1($.expression),
+      $.block,
       optional($.else_block),
       'end',
     ),
@@ -578,14 +581,14 @@ module.exports = grammar({
       'recover',
       optional($.annotation),
       optional($.capability),
-      repeat1($.expression),
+      $.block,
       'end',
     ),
 
     match_expression: $ => seq(
       'match',
       optional($.annotation),
-      $.expression,
+      $.block,
       repeat1($.case_statement),
       optional($.else_block),
       'end',
@@ -602,16 +605,16 @@ module.exports = grammar({
         $.if_block,
       ),
       '=>',
-      repeat(seq($.expression, optional(';'))),
+      $.block,
     ),
 
-    return_statement: _ => 'return',
+    return_statement: $ => prec.left(seq('return', optional($.block))),
 
-    continue_statement: _ => 'continue',
+    continue_statement: $ => prec.left(seq('continue', optional($.block))),
 
-    break_statement: _ => 'break',
+    break_statement: $ => prec.left(seq('break', optional($.block))),
 
-    consume_expression: $ => seq('consume', $.identifier),
+    consume_expression: $ => seq('consume', optional($.capability), $.identifier),
 
     generic_parameters: $ => seq(
       '[',
@@ -636,13 +639,7 @@ module.exports = grammar({
     array_literal: $ => seq(
       '[',
       optional(seq('as', $.type, ':')),
-      optional(seq(
-        $.expression,
-        repeat(seq(
-          optional(';'),
-          optional(seq('as', $.type, ':')),
-          $.expression,
-        )))),
+      optional($.block),
       ']',
     ),
 
@@ -690,23 +687,26 @@ module.exports = grammar({
       )),
       '"',
     ),
-    _multiline_string_literal: $ => seq(
+    _multiline_string_literal: $ => prec.right(seq(
       '"""',
       repeat(choice(
         alias($._multiline_string_content, $.string_content),
         $._escape_sequence,
       )),
       '"""',
-    ),
+    )),
 
     character: $ => seq(
       '\'',
-      choice(
-        token.immediate(prec(2, /[^'\\]/)),
-        $._escape_sequence,
+      repeat1(
+        choice(
+          $.character_content,
+          $._escape_sequence,
+        ),
       ),
       '\'',
     ),
+    character_content: _ => token.immediate(prec(2, /[^'\\]+/)),
 
     // Workaround to https://github.com/tree-sitter/tree-sitter/issues/1156
     // We give names to the token_ constructs containing a regexp

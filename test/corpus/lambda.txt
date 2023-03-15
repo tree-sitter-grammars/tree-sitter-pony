@@ -1,0 +1,242 @@
+===========
+Lambda Type
+===========
+
+primitive Lambda
+  fun lambda(callback: {box function_name[T](Argument[T]): ReturnType? } iso): ReturnType? =>
+    callback.function_name[U8](Argument[U8])?
+---
+
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters
+        (parameter
+          (identifier)
+          (isolated_type
+            (lambda_type
+              (capability)
+              (identifier)
+              (type_parameters
+                (base_type (identifier))
+              )
+              (generic_type 
+                (identifier)
+                (base_type (identifier))
+              )
+              (base_type (identifier))
+            )
+          )
+        )
+      )
+      returns: (base_type (identifier))
+      (block
+        (call_expression
+          callee: (member_expression
+            (identifier)
+            (generic_type
+              (identifier)
+              (base_type (identifier))
+            )
+          )
+          (generic_type
+            (identifier)
+            (base_type (identifier))
+          )
+        )
+      )
+    )
+  )
+)
+
+======
+Lambda
+======
+
+class Lambda
+  let lambda: {(String): USize} = {(s) => s.size()}
+
+---
+
+(source_file
+  (class_definition
+    (identifier)
+    (field
+      (identifier)
+      (lambda_type
+        (base_type (identifier))
+        (base_type (identifier))
+      )
+      (lambda_expression
+        (lambda_parameter (identifier))
+        (block
+          (call_expression
+            callee: (member_expression
+              (identifier)
+              (identifier)
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+========
+No Args
+========
+
+class Lambda
+  let throw_fn: {ref ()} = {() => None } ref
+---
+
+(source_file
+  (class_definition
+    (identifier)
+    (field
+      (identifier)
+      (lambda_type
+        (capability))
+      (lambda_expression
+        (block (none))
+        (capability)
+      )
+    )
+  )
+)
+
+===============
+Lambda Captures
+===============
+
+class Captures
+  fun cap() =>
+    let f = true
+    let l = { ()(f_capture: Bool = f) => not f_capture }
+
+---
+
+(source_file
+  (class_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (assignment_expression
+          (variable_declaration
+            (identifier)
+          )
+          (block
+            (literal (boolean))
+          )
+        )
+        (assignment_expression
+          (variable_declaration
+            (identifier)
+          )
+          (block
+            (lambda_expression
+              (lambda_captures 
+                (identifier)
+                (base_type (identifier))
+                (identifier)
+              )
+              (block
+                (unary_expression (identifier))
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+==============
+Object Literal
+==============
+
+primitive ObjectLiteral
+  fun bla() =>
+    var obj = object
+      fun baz(): Type ? =>
+        (Body .> chain()).call()
+      be snot[T: Stringable #read](arg: Array[Type] iso^) =>
+        arg.size()
+    end
+
+---
+
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (assignment_expression
+          (variable_declaration
+            (identifier)
+          )
+          (block
+            (literal
+              (object_literal
+                (method
+                  (identifier)
+                  (parameters)
+                  (base_type (identifier))
+                  (block
+                    (call_expression
+                      (member_expression
+                        (parenthesized_expression
+                          (call_expression
+                            (chain_expression
+                              (identifier)
+                              (identifier)
+                            )
+                          )
+                        )
+                        (identifier)
+                      )
+                    )
+                  )
+                )
+                (behavior
+                  (identifier)
+                  (generic_parameters
+                    (base_type (identifier))
+                    (base_type (identifier) (type_capability))
+                  )
+                  (parameters
+                    (parameter
+                      (identifier)
+                      (ephemeral_type
+                        (isolated_type
+                          (generic_type
+                            (identifier)
+                            (base_type (identifier))
+                          )
+                        )
+                      )
+                    )
+                  )
+                  (block
+                    (call_expression
+                      (member_expression
+                        (identifier)
+                        (identifier)
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)

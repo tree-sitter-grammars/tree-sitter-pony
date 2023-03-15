@@ -1,0 +1,310 @@
+==========
+Docstrings
+==========
+
+"""
+module docstring
+"""
+
+actor Main
+  """
+  actor docstring
+  """
+
+  let x: U8
+    "field docstring"
+  var y: String ref = "default"
+    """
+    long field docstring of field with default value
+    """
+  embed z: (U8 & Real[U8])
+
+  new ref create(env: Env) =>
+    """
+    constructor docstring
+    """
+    consume env
+
+  be with_param[Type: Constraint](arg: Type) =>
+    "snot"
+
+---
+
+(source_file 
+  (string (string_content))
+  (actor_definition
+    (identifier) 
+    (string (string_content))
+    (field
+      (identifier)
+      (base_type (identifier))
+      (string (string_content))
+    )
+    (field
+      (identifier)
+      (reference_type
+        (base_type (identifier)))
+      (literal (string (string_content)))
+      (string (string_content))
+    )
+    (field
+      (identifier)
+      (intersection_type
+        (base_type (identifier))
+        (generic_type
+          (identifier)
+          (base_type (identifier))
+        )
+      )
+    )
+    (constructor
+      (capability)
+      (identifier)
+      (parameters
+        (parameter
+          (identifier)
+          (base_type (identifier))
+        )
+      )
+      (block
+        (literal (string (string_content)))
+        (consume_expression (identifier))
+      )
+    )
+    (behavior
+      (identifier)
+      (generic_parameters
+        (base_type (identifier))
+        (base_type (identifier))
+      )
+      (parameters
+        (parameter
+          (identifier)
+          (base_type (identifier))
+        )
+      )
+      (block
+        (literal (string (string_content)))
+      )
+    )
+  )
+)
+
+=============
+Method quirks
+=============
+
+use "collection" if windows
+
+actor Main
+  new create(env: Env) =>
+    env.out.print("awesome" * 2)
+
+  fun ref awesome(): Bool => true
+
+  be yeah[Arg: Constraint](foo: Array[U8]) =>
+    foo~partial(56.7)
+
+---
+(source_file
+  (use_statement
+    (string (string_content))
+    (platform_specifier (if_block (block (identifier))))
+  )
+  (actor_definition 
+    (identifier)
+    (constructor
+      (identifier)
+      (parameters
+        (parameter
+          (identifier)
+          (base_type (identifier))
+        )
+      )
+      (block
+        (call_expression
+          callee: (member_expression
+            (identifier)
+            (member_expression
+              (identifier)
+              (identifier)
+            )
+          )
+          (binary_expression
+            left: (literal (string (string_content)))
+            right: (literal (number))
+          )
+        )
+      )
+    )
+    (method
+      (capability)
+      (identifier)
+      (parameters)
+      returns: (base_type (identifier))
+      (block
+        (literal (boolean))
+      )
+    )
+    (behavior
+      (identifier)
+      (generic_parameters
+        (base_type (identifier))
+        (base_type (identifier))
+      )
+      (parameters
+        (parameter
+          (identifier)
+          (generic_type
+            (identifier)
+            (base_type (identifier))
+          )
+        )
+      )
+      (block
+        (call_expression
+          callee: (partial_application
+            (identifier)
+            (identifier)
+          )
+          (literal (float))
+        )
+      )
+    )
+  )
+)
+
+======
+MT
+======
+
+class MT is Random
+  """
+  bla
+  bla
+  bla
+  """
+  embed _state: Array[U64]
+  var _index: USize
+
+  new create(x: U64 = 5489, y: U64 = 0) =>
+    """
+    docstring
+    """
+    _state = Array[U64](_n())
+    _index = _n()
+---
+
+(source_file
+  (class_definition
+    (identifier)
+    (base_type (identifier))
+    (string (string_content))
+    (field
+      (identifier)
+      (generic_type
+        (identifier)
+        (base_type (identifier))
+      )
+    )
+    (field
+      (identifier)
+      (base_type (identifier))
+    )
+    (constructor
+      (identifier)
+      (parameters
+        (parameter
+          (identifier)
+          (base_type (identifier))
+          (literal (number))
+        )
+        (parameter
+          (identifier)
+          (base_type (identifier))
+          (literal (number))
+        )
+      )
+      (block
+        (literal (string (string_content)))
+        (assignment_expression
+          (identifier)
+          (block
+            (call_expression
+              callee: (generic_type
+                (identifier)
+                (base_type (identifier))
+              )
+              (call_expression
+                callee: (identifier)
+              )
+            )
+          )
+        )
+        (assignment_expression
+          (identifier)
+          (block
+            (call_expression
+              callee: (identifier)
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+=========
+Interface
+=========
+
+interface Notify
+  """
+  Notify
+  """
+  fun ref apply(section: String, key: String, value: String): Bool
+    """
+    docstring
+    """
+---
+(source_file
+  (interface_definition
+    (identifier)
+    (string (string_content))
+    (method
+      (capability)
+      (identifier)
+      (parameters
+        (parameter
+          (identifier)
+          (base_type (identifier))
+        )
+        (parameter
+          (identifier)
+          (base_type (identifier))
+        )
+        (parameter
+          (identifier)
+          (base_type (identifier))
+        ) 
+      )
+      returns: (base_type (identifier))
+      (string (string_content))
+    )
+  )
+)
+
+=========
+Annotated
+=========
+
+actor \nodoc,test\ Main is TestList
+
+---
+(source_file
+  (actor_definition
+    (annotation (identifier) (identifier))
+    (identifier)
+    (base_type (identifier))
+  )
+)

@@ -1,0 +1,386 @@
+=========
+Unary ops
+=========
+
+use "snot" if not badger
+
+---
+
+(source_file
+  (use_statement
+    (string (string_content))
+    (platform_specifier
+      (if_block
+        (block
+          (unary_expression
+            argument: (identifier)
+          )
+        )
+      )
+    )
+  )
+)
+
+==============
+Array Literals
+==============
+
+use "snot" if [
+  []
+  [
+    1
+    2
+    3
+  ]
+]
+
+---
+(source_file
+  (use_statement
+    (string (string_content))
+    (platform_specifier
+      (if_block
+        (block
+          (literal
+            (array_literal
+              (block
+                (literal (array_literal))
+                (literal
+                  (array_literal
+                    (block
+                      (literal (number))
+                      (literal (number))
+                      (literal (number))
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+=======================
+Array Literals In Block
+=======================
+
+primitive Snot
+  fun foo() =>
+    []
+    []
+
+---
+
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (literal
+          (array_literal))
+        (literal
+          (array_literal))
+      )
+    )
+  )
+)
+
+=======================
+Strings In Block
+=======================
+
+primitive Snot
+  fun foo() =>
+    "foo"
+    "bar"
+
+---
+
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (literal (string (string_content)))
+        (literal (string (string_content)))
+      )
+    )
+  )
+)
+
+===================
+Empty Array Literal
+===================
+
+use "" if []
+
+---
+(source_file
+  (use_statement
+    (string)
+    (platform_specifier
+      (if_block 
+        (block
+          (literal (array_literal))
+        )
+      )
+    )
+  )
+)
+
+===============
+Array Type Hint
+===============
+
+use "" if [as U8:
+  13
+  12
+]
+---
+(source_file
+  (use_statement
+    (string)
+    (platform_specifier
+      (if_block
+        (block
+          (literal 
+            (array_literal
+              (base_type (identifier))
+              (block
+                (literal (number))
+                (literal (number))
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+========
+If Block
+========
+
+primitive Foo
+  fun bar() =>
+    if "first_line"
+       true
+    then
+      "then"
+    end
+---
+
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (if_statement
+          (if_block
+            (block
+              (literal (string (string_content)))
+              (literal (boolean))
+            )
+          )
+          (then_block
+            (block
+              (literal (string (string_content)))
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+================================
+Partial Application in Arguments
+================================
+
+primitive Foo
+  fun foo() =>
+    Promises[A].join(
+      [this]
+        .> concat(ps)
+        .values())
+---
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (call_expression
+          callee: (member_expression
+            (generic_type
+              (identifier)
+              (base_type (identifier))
+            )
+            (identifier)
+          )
+          (call_expression
+            callee: (member_expression
+              (call_expression
+                callee: (chain_expression
+                  (literal
+                    (array_literal (block (this)))
+                  )
+                  (identifier)
+                )
+                (identifier)
+              )
+            (identifier)
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+===================
+Block with ffi call
+===================
+
+primitive Foo
+  fun bar() =>
+    let f = Foo.bar()
+    @baz("argument")
+---
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (assignment_expression
+          (variable_declaration (identifier))
+          (block
+            (call_expression
+              callee: (member_expression
+                (identifier)
+                (identifier)
+              )
+            )
+          )
+        )
+        (call_expression
+          callee: (ffi_identifier (identifier))
+          (literal (string (string_content)))
+        )
+      )
+    )
+  )
+)
+
+======
+Iftype
+======
+
+primitive Foo[A]
+  fun bar() =>
+    iftype A <: Stringable then
+        "snot"
+    elseif A <: Hashable then
+        "hash"
+    else
+        "bla"
+    end
+---
+(source_file
+  (primitive_definition
+    (identifier)
+    (generic_parameters
+      (base_type (identifier))
+    )
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (iftype_statement
+          (base_type (identifier))
+          (base_type (identifier))
+          (then_block
+            (block (literal (string (string_content))))
+          )
+          (elseiftype_block
+            (base_type (identifier))
+            (base_type (identifier))
+            (then_block
+              (block (literal (string (string_content))))
+            )
+          )
+          (else_block
+            (block (literal (string (string_content))))
+          )
+        )
+      )
+    )
+  )
+)
+
+========
+For Loop
+========
+
+primitive Snot
+  fun bar() =>
+    for a in [].values() do
+        while true do
+            repeat
+                None
+            until a == true end
+        end
+    end
+---
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      (block
+        (for_statement
+          (identifier)
+          collection: (call_expression
+            callee: (member_expression
+              (literal (array_literal))
+              (identifier)
+            )
+          )
+          (do_block
+            (block
+              (while_statement
+                (literal (boolean))
+                (do_block
+                  (block
+                    (repeat_statement
+                      (block (none))
+                      (binary_expression
+                        left: (identifier)
+                        right: (literal (boolean))
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
