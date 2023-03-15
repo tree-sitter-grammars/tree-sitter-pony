@@ -561,7 +561,7 @@ module.exports = grammar({
     with_elem: $ => seq(
       $.identifier,
       '=',
-      $.block
+      $.block,
     ),
     with_statement: $ => seq(
       'with',
