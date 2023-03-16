@@ -34,26 +34,28 @@ actor Main
   (string (string_content))
   (actor_definition
     (identifier) 
-    (string (string_content))
+    docstring: (string (string_content))
     (field
-      (identifier)
-      (base_type (identifier))
-      (string (string_content))
+      name: (identifier)
+      (base_type name: (identifier))
+      docstring: (string (string_content))
     )
     (field
-      (identifier)
-      (reference_type
-        (base_type (identifier)))
+      name: (identifier)
+      (ref_type
+        (base_type name: (identifier)))
       (literal (string (string_content)))
-      (string (string_content))
+      docstring: (string (string_content))
     )
     (field
-      (identifier)
+      name: (identifier)
       (intersection_type
-        (base_type (identifier))
-        (generic_type
-          (identifier)
-          (base_type (identifier))
+        (base_type name: (identifier))
+        (base_type
+          name: (identifier)
+          (type_args
+            (base_type name: (identifier))
+          )
         )
       )
     )
@@ -62,8 +64,8 @@ actor Main
       (identifier)
       (parameters
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
       )
       (block
@@ -74,13 +76,15 @@ actor Main
     (behavior
       (identifier)
       (generic_parameters
-        (base_type (identifier))
-        (base_type (identifier))
+        (generic_parameter
+          (identifier)
+          (base_type name: (identifier))
+        )
       )
       (parameters
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
       )
       (block
@@ -111,14 +115,14 @@ actor Main
     (string (string_content))
     (platform_specifier (if_block (block (identifier))))
   )
-  (actor_definition 
+  (actor_definition
     (identifier)
     (constructor
       (identifier)
       (parameters
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
       )
       (block
@@ -141,7 +145,7 @@ actor Main
       (capability)
       (identifier)
       (parameters)
-      returns: (base_type (identifier))
+      returns: (base_type name: (identifier))
       (block
         (literal (boolean))
       )
@@ -149,15 +153,19 @@ actor Main
     (behavior
       (identifier)
       (generic_parameters
-        (base_type (identifier))
-        (base_type (identifier))
+        (generic_parameter
+          (identifier)
+          (base_type name: (identifier))
+        )
       )
       (parameters
         (parameter
-          (identifier)
-          (generic_type
-            (identifier)
-            (base_type (identifier))
+          name: (identifier)
+          (base_type
+            name: (identifier)
+            (type_args
+              (base_type name: (identifier))
+            )
           )
         )
       )
@@ -198,30 +206,32 @@ class MT is Random
 (source_file
   (class_definition
     (identifier)
-    (base_type (identifier))
+    (base_type name: (identifier))
     (string (string_content))
     (field
-      (identifier)
-      (generic_type
-        (identifier)
-        (base_type (identifier))
+      name: (identifier)
+      (base_type
+        name: (identifier)
+        (type_args
+          (base_type name: (identifier))
+        )
       )
     )
     (field
-      (identifier)
-      (base_type (identifier))
+      name: (identifier)
+      (base_type name: (identifier))
     )
     (constructor
       (identifier)
       (parameters
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
           (literal (number))
         )
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
           (literal (number))
         )
       )
@@ -231,9 +241,11 @@ class MT is Random
           (identifier)
           (block
             (call_expression
-              callee: (generic_type
+              callee: (generic_expression
                 (identifier)
-                (base_type (identifier))
+                (type_args
+                  (base_type name: (identifier))
+                )
               )
               (call_expression
                 callee: (identifier)
@@ -276,19 +288,19 @@ interface Notify
       (identifier)
       (parameters
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         ) 
       )
-      returns: (base_type (identifier))
+      returns: (base_type name: (identifier))
       (string (string_content))
     )
   )
@@ -305,6 +317,6 @@ actor \nodoc,test\ Main is TestList
   (actor_definition
     (annotation (identifier) (identifier))
     (identifier)
-    (base_type (identifier))
+    (base_type name: (identifier))
   )
 )

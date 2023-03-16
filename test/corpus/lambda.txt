@@ -14,36 +14,44 @@ primitive Lambda
       (identifier)
       (parameters
         (parameter
-          (identifier)
-          (isolated_type
+          name: (identifier)
+          (iso_type
             (lambda_type
               (capability)
               (identifier)
               (type_parameters
-                (base_type (identifier))
+                (generic_parameter (identifier))
               )
-              (generic_type 
-                (identifier)
-                (base_type (identifier))
+              (lambda_parameters
+                (base_type
+                  name: (identifier)
+                  (type_args
+                    (base_type name: (identifier))
+                  )
+                )
               )
-              (base_type (identifier))
+              returns: (base_type name: (identifier))
             )
           )
         )
       )
-      returns: (base_type (identifier))
+      returns: (base_type name: (identifier))
       (block
         (call_expression
           callee: (member_expression
             (identifier)
-            (generic_type
+            (generic_expression
               (identifier)
-              (base_type (identifier))
+              (type_args
+                (base_type name: (identifier))
+              )
             )
           )
-          (generic_type
+          (generic_expression
             (identifier)
-            (base_type (identifier))
+            (type_args
+              (base_type name: (identifier))
+            )
           )
         )
       )
@@ -64,13 +72,15 @@ class Lambda
   (class_definition
     (identifier)
     (field
-      (identifier)
+      name: (identifier)
       (lambda_type
-        (base_type (identifier))
-        (base_type (identifier))
+        (lambda_parameters
+          (base_type name: (identifier))
+        )
+        returns: (base_type name: (identifier))
       )
       (lambda_expression
-        (lambda_parameter (identifier))
+        (lambda_parameter name: (identifier))
         (block
           (call_expression
             callee: (member_expression
@@ -98,7 +108,9 @@ class Lambda
     (field
       (identifier)
       (lambda_type
-        (capability))
+        (capability)
+        (lambda_parameters)
+      )
       (lambda_expression
         (block (none))
         (capability)
@@ -207,17 +219,23 @@ primitive ObjectLiteral
                 (behavior
                   (identifier)
                   (generic_parameters
-                    (base_type (identifier))
-                    (base_type (identifier) (type_capability))
+                    (generic_parameter
+                      (identifier)
+                      (read_type
+                        (base_type (identifier))
+                      )
+                    )
                   )
                   (parameters
                     (parameter
                       (identifier)
                       (ephemeral_type
-                        (isolated_type
-                          (generic_type
+                        (iso_type
+                          (base_type
                             (identifier)
-                            (base_type (identifier))
+                            (type_args
+                              (base_type (identifier))
+                            )
                           )
                         )
                       )
@@ -232,6 +250,108 @@ primitive ObjectLiteral
                     )
                   )
                 )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+===========
+Bare Lambda
+===========
+
+use @get_function[@{(U32): U32}](typ: U32)
+
+actor Main
+  new create(env: Env) =>
+    let identity = @get_function(0)
+    let add: @{(U32, U32): U32} = @get_function[@{(U32, U32): U32}](1)
+    let result = add(identity(1), identity(2))
+
+---
+
+(source_file
+  (use_statement
+    (ffi_method
+      (identifier)
+      returns: (lambda_type
+        (lambda_parameters
+          (base_type name: (identifier))
+        )
+        returns: (base_type name: (identifier))
+      )
+      (parameters
+        (parameter
+          name: (identifier)
+          (base_type name: (identifier))
+        )
+      )
+    )
+  )
+  (actor_definition
+    (identifier)
+    (constructor
+      (identifier)
+      (parameters
+        (parameter
+          name: (identifier)
+          (base_type name: (identifier))
+        )
+      )
+      (block
+        (assignment_expression
+          (variable_declaration (identifier))
+          (block
+            (call_expression
+              callee: (ffi_identifier (identifier))
+              (literal (number))
+            )
+          )
+        )
+        (assignment_expression
+          (variable_declaration
+            (identifier)
+            (lambda_type
+              (lambda_parameters
+                (base_type name: (identifier))
+                (base_type name: (identifier))
+              )
+              returns: (base_type name: (identifier))
+            )
+          )
+          (block
+            (call_expression
+              callee: (generic_expression
+                (ffi_identifier (identifier))
+                (type_args
+                  (lambda_type
+                    (lambda_parameters
+                      (base_type name: (identifier))
+                      (base_type name: (identifier))
+                    )
+                    returns: (base_type name: (identifier))
+                  )
+                )
+              )
+              (literal (number))
+            )
+          )
+        )
+        (assignment_expression
+          (variable_declaration (identifier))
+          (block
+            (call_expression
+              callee: (identifier)
+              (call_expression
+                callee: (identifier)
+                (literal (number))
+              )
+              (call_expression
+                callee: (identifier)
+                (literal (number))
               )
             )
           )
