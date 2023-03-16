@@ -29,7 +29,7 @@ module.exports = grammar({
   conflicts: $ => [
     [$.expression, $.base_type],
     [$.expression, $.type],
-    [$.expression, $.generic_expression]
+    [$.expression, $.generic_expression],
   ],
 
   extras: $ => [
@@ -237,9 +237,9 @@ module.exports = grammar({
 
     parameter: $ => choice(
       seq(
-        field('name', $.identifier), 
-        ':', 
-        $.type, 
+        field('name', $.identifier),
+        ':',
+        $.type,
         optional(seq('=', $.expression))),
       '...',
     ),
@@ -402,7 +402,7 @@ module.exports = grammar({
 
     generic_expression: $ => seq(
       choice($.identifier, $.ffi_identifier),
-      $.type_args
+      $.type_args,
     ),
 
     assignment_expression: $ => prec.left(PREC.ASSIGNMENT, seq(
@@ -630,7 +630,7 @@ module.exports = grammar({
     break_statement: $ => prec.left(seq('break', optional($.block))),
 
     consume_expression: $ => seq('consume', optional($.capability), $.identifier),
-    
+
     generic_parameter: $ => seq(
       $.identifier,
       optional(seq(':', $.type)),
