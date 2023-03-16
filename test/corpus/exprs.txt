@@ -223,9 +223,11 @@ primitive Foo
       (block
         (call_expression
           callee: (member_expression
-            (generic_type
+            (generic_expression
               (identifier)
-              (base_type (identifier))
+              (type_args
+                (base_type name: (identifier))
+              )
             )
             (identifier)
           )
@@ -303,7 +305,9 @@ primitive Foo[A]
   (primitive_definition
     (identifier)
     (generic_parameters
-      (base_type (identifier))
+      (generic_parameter
+        (identifier)
+      )
     )
     (method
       (identifier)
@@ -376,6 +380,83 @@ primitive Snot
                   )
                 )
               )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+
+=============
+Array Literal
+=============
+
+trait iso T
+
+class iso C1 is T
+class iso C2 is T
+
+primitive Foo
+  fun apply(): Array[T] =>
+    let c1: C1 iso = C1
+    let c2: C2 iso = C2
+    [as T: consume c1; consume c2]
+
+---
+
+(source_file
+  (trait_definition
+    (capability)
+    (identifier)
+  )
+  (class_definition
+    (capability)
+    (identifier)
+    (base_type name: (identifier))
+  )
+  (class_definition
+    (capability)
+    (identifier)
+    (base_type name: (identifier))
+  )
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      returns: (base_type
+        name: (identifier)
+        (type_args
+          (base_type name: (identifier))
+        )
+      )
+      (block
+        (assignment_expression
+          (variable_declaration
+            (identifier)
+            (iso_type
+              (base_type name: (identifier))
+            )
+          )
+          (block (identifier))
+        )
+        (assignment_expression
+          (variable_declaration
+            (identifier)
+            (iso_type
+              (base_type name: (identifier))
+            )
+          )
+          (block (identifier))
+        )
+        (literal
+          (array_literal
+            (base_type name: (identifier))
+            (block
+              (consume_expression (identifier))
+              (consume_expression (identifier))
             )
           )
         )
