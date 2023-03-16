@@ -59,15 +59,15 @@ use @println[U64](i: U64, u: U64, ...)?
   (use_statement
     (ffi_method
       (identifier)
-      returns: (base_type (identifier))
+      returns: (base_type name: (identifier))
       (parameters
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
         (parameter)
       )
@@ -111,35 +111,35 @@ use @primitve_types[Bool](a: U64, b: I128, c: Main ref, d: U8 iso^, e: I8 tag!)
   (use_statement
     (ffi_method
       (identifier)
-      returns: (base_type (identifier))
+      returns: (base_type name: (identifier))
       (parameters
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
         (parameter
-          (identifier)
-          (base_type (identifier))
+          name: (identifier)
+          (base_type name: (identifier))
         )
         (parameter
-          (identifier)
-          (reference_type
-            (base_type (identifier))
+          name: (identifier)
+          (ref_type
+            (base_type name: (identifier))
           )
         )
         (parameter
-          (identifier)
+          name: (identifier)
           (ephemeral_type
-            (isolated_type
-              (base_type (identifier))
+            (iso_type
+              (base_type name: (identifier))
             )
           )
         )
         (parameter
-          (identifier)
+          name: (identifier)
           (aliased_type
             (tag_type
-              (base_type (identifier))
+              (base_type name: (identifier))
             )
           )
         )
@@ -161,8 +161,8 @@ use @union_type[(U8 | I8)]()
     (ffi_method
       (identifier)
       returns: (union_type
-        (base_type (identifier))
-        (base_type (identifier))
+        (base_type name: (identifier))
+        (base_type name: (identifier))
       )
       (parameters)
     )
@@ -182,8 +182,8 @@ use @union_type[(U8 & I8)]()
     (ffi_method
       (identifier)
       returns: (intersection_type
-        (base_type (identifier))
-        (base_type (identifier))
+        (base_type name: (identifier))
+        (base_type name: (identifier))
       )
       (parameters)
     )
@@ -203,10 +203,10 @@ use @tuple_type[(Foo, (Bar | Baz))]()
     (ffi_method
       (identifier)
       returns: (tuple_type
-        (base_type (identifier))
+        (base_type name: (identifier))
         (union_type
-          (base_type (identifier))
-          (base_type (identifier))
+          (base_type name: (identifier))
+          (base_type name: (identifier))
         )
       )
       (parameters)
@@ -227,7 +227,7 @@ use @grouped[(Foo)]()
     (ffi_method
       (identifier)
       returns: (tuple_type
-        (base_type (identifier))
+        (base_type name: (identifier))
       )
       (parameters)
     )
@@ -245,11 +245,13 @@ use @snot[Iterator[this->A]^]()
     (ffi_method
       (identifier)
       returns: (ephemeral_type
-        (generic_type
-          (identifier)
-          (viewpoint_type
-            (this)
-            (base_type (identifier))
+        (base_type
+          name: (identifier)
+          (type_args
+            (viewpoint_type
+              (this)
+              (base_type name: (identifier))
+            )
           )
         )
       )

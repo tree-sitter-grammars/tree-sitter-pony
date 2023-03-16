@@ -19,13 +19,15 @@ const PREC = {
   UNARY: 4,
   CALL: 5,
   MEMBER: 6,
+  TYPEARGS: 7,
+  ARRAY_LITERAL: 8,
 };
 
 module.exports = grammar({
   name: 'pony',
 
   conflicts: $ => [
-    [$.expression, $.generic_type],
+    [$.expression, $.generic_expression],
   ],
 
   extras: $ => [
@@ -175,7 +177,7 @@ module.exports = grammar({
 
     field: $ => seq(
       choice('embed', 'let', 'var'),
-      $.identifier,
+      field('name', $.identifier),
       ':',
       $.type,
       optional(seq('=', $.expression)),
@@ -232,7 +234,11 @@ module.exports = grammar({
     parameters: $ => seq('(', commaSep($.parameter), ')'),
 
     parameter: $ => choice(
-      seq($.identifier, ':', $.type, optional(seq('=', $.expression))),
+      seq(
+        field('name', $.identifier),
+        ':',
+        $.type,
+        optional(seq('=', $.expression))),
       '...',
     ),
 
@@ -240,58 +246,48 @@ module.exports = grammar({
       $.base_type,
       $.aliased_type,
       $.ephemeral_type,
-      $.generic_type,
-      $.tuple_type,
-      $.isolated_type,
-      $.transition_type,
-      $.reference_type,
-      $.value_type,
+      $.read_type,
+      $.send_type,
+      $.share_type,
+      $.alias_type,
+      $.any_type,
+      $.iso_type,
+      $.trn_type,
+      $.ref_type,
+      $.val_type,
       $.box_type,
       $.tag_type,
+      $.tuple_type,
       $.union_type,
       $.intersection_type,
       $.viewpoint_type,
       $.lambda_type,
-      $.member_type,
       $.this,
       $.none,
     ),
 
-    base_type: $ => prec.right(seq($.identifier, optional($.type_capability))),
+    base_type: $ => prec.right(seq(
+      field('name', sep1('.', $.identifier)),
+      optional($.type_args),
+    )),
 
-    type_capability: _ => choice(
-      '#read',
-      '#send',
-      '#share',
-      '#alias',
-      '#any',
-    ),
+    type_args: $ => seq('[', commaSep1($.type), ']'),
 
+    read_type: $ => seq(choice($.base_type, $.lambda_type), '#read'),
+    send_type: $ => seq(choice($.base_type, $.lambda_type), '#send'),
+    share_type: $ => seq(choice($.base_type, $.lambda_type), '#share'),
+    alias_type: $ => seq(choice($.base_type, $.lambda_type), '#alias'),
+    any_type: $ => seq(choice($.base_type, $.lambda_type), '#any'),
+    iso_type: $ => seq(choice($.base_type, $.lambda_type), 'iso'),
+    trn_type: $ => seq(choice($.base_type, $.lambda_type), 'trn'),
+    ref_type: $ => seq(choice($.base_type, $.lambda_type), 'ref'),
+    val_type: $ => seq(choice($.base_type, $.lambda_type), 'val'),
+    box_type: $ => seq(choice($.base_type, $.lambda_type), 'box'),
+    tag_type: $ => seq(choice($.base_type, $.lambda_type), 'tag'),
     aliased_type: $ => seq($.type, '!'),
-
     ephemeral_type: $ => seq($.type, '^'),
 
-    generic_type: $ => seq(
-      choice($.identifier, $.ffi_identifier),
-      '[',
-      commaSep1(seq($.type, optional(seq('=', $.type)))),
-      ']',
-      optional($.type_capability),
-    ),
-
     tuple_type: $ => seq('(', commaSep1($.type), ')'),
-
-    isolated_type: $ => seq($.type, 'iso'),
-
-    transition_type: $ => seq($.type, 'trn'),
-
-    reference_type: $ => seq($.type, 'ref'),
-
-    value_type: $ => seq($.type, 'val'),
-
-    box_type: $ => seq($.type, 'box'),
-
-    tag_type: $ => seq($.type, 'tag'),
 
     union_type: $ => prec.right(seq(
       choice(
@@ -309,21 +305,22 @@ module.exports = grammar({
 
     viewpoint_type: $ => prec.right(seq($.type, '->', $.type)),
 
+    lambda_parameters: $ => seq(
+      '(',
+      commaSep($.type),
+      ')',
+    ),
     lambda_type: $ => seq(
       optional('@'),
       '{',
       optional($.capability),
       optional($.identifier),
       optional(alias($.generic_parameters, $.type_parameters)),
-      '(',
-      commaSep($.type),
-      ')',
-      optional(seq(':', $.type)),
+      $.lambda_parameters,
+      optional(seq(':', field('returns', $.type))),
       optional('?'),
       '}',
     ),
-
-    member_type: $ => prec.right(seq($.identifier, '.', $.type)),
 
     block: $ => prec.left(seq($.expression, repeat(seq(optional(';'), $.expression)))),
 
@@ -353,7 +350,7 @@ module.exports = grammar({
       $.member_expression,
       $.parenthesized_expression,
       $.tuple_expression,
-      $.generic_type,
+      $.generic_expression,
       $.literal,
       $.identifier,
       $.ffi_identifier,
@@ -401,6 +398,11 @@ module.exports = grammar({
       ')',
     )),
 
+    generic_expression: $ => seq(
+      choice($.identifier, $.ffi_identifier),
+      $.type_args,
+    ),
+
     assignment_expression: $ => prec.left(PREC.ASSIGNMENT, seq(
       $.expression,
       '=',
@@ -447,11 +449,11 @@ module.exports = grammar({
       '}',
       optional($.capability),
     ),
-    lambda_parameter: $ => seq(
-      $.identifier,
+    lambda_parameter: $ => prec(PREC.LAMBDA, seq(
+      field('name', $.identifier),
       optional(seq(':', $.type)),
       optional(seq('=', $.expression)),
-    ),
+    )),
     lambda_captures: $ => seq(
       '(',
       commaSep(seq(
@@ -627,13 +629,15 @@ module.exports = grammar({
 
     consume_expression: $ => seq('consume', optional($.capability), $.identifier),
 
+    generic_parameter: $ => seq(
+      $.identifier,
+      optional(seq(':', $.type)),
+      optional(seq('=', field('default', $.type))),
+    ),
+
     generic_parameters: $ => seq(
       '[',
-      commaSep1(seq(
-        $.type,
-        optional(seq(':', $.type)),
-        optional(seq('=', $.type)),
-      )),
+      commaSep1($.generic_parameter),
       ']',
     ),
 
@@ -786,5 +790,18 @@ function commaSep(rule) {
  *
  */
 function commaSep1(rule) {
-  return seq(rule, repeat(seq(',', rule)));
+  return sep1(',', rule);
+}
+
+/**
+ * Creates a rule to match on or more occurrences of `rule` separated by `sep`
+ *
+  @param {string} sep
+ * @param {Rule} rule
+ *
+ * @return {SeqRule}
+ *
+ */
+function sep1(sep, rule) {
+  return seq(rule, repeat(seq(sep, rule)));
 }
