@@ -1446,10 +1446,6 @@
         {
           "type": "SYMBOL",
           "name": "this"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "none"
         }
       ]
     },
@@ -2340,10 +2336,6 @@
         {
           "type": "SYMBOL",
           "name": "this"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "none"
         },
         {
           "type": "SYMBOL",
@@ -5838,10 +5830,6 @@
     "this": {
       "type": "STRING",
       "value": "this"
-    },
-    "none": {
-      "type": "STRING",
-      "value": "None"
     },
     "comment": {
       "type": "TOKEN",

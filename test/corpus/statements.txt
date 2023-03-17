@@ -45,7 +45,7 @@ primitive ContainsWith
               )
             )
             (else_block
-              (block (none))
+              (block (identifier))
             )
           )
         )

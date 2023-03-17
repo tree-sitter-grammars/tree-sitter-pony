@@ -371,7 +371,7 @@ primitive Snot
                 (do_block
                   (block
                     (repeat_statement
-                      (block (none))
+                      (block (identifier))
                       (binary_expression
                         left: (identifier)
                         right: (literal (boolean))

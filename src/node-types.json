@@ -88,10 +88,6 @@
         "named": true
       },
       {
-        "type": "none",
-        "named": true
-      },
-      {
         "type": "parenthesized_expression",
         "named": true
       },
@@ -217,10 +213,6 @@
       },
       {
         "type": "lambda_type",
-        "named": true
-      },
-      {
-        "type": "none",
         "named": true
       },
       {
@@ -2935,10 +2927,6 @@
   {
     "type": "new",
     "named": false
-  },
-  {
-    "type": "none",
-    "named": true
   },
   {
     "type": "not",

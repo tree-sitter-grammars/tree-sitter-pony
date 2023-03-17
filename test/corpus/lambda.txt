@@ -112,7 +112,7 @@ class Lambda
         (lambda_parameters)
       )
       (lambda_expression
-        (block (none))
+        (block (identifier))
         (capability)
       )
     )
