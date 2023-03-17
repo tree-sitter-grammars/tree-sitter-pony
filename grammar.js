@@ -1,6 +1,9 @@
 /**
  * @file Pony grammar for tree-sitter
  * @author Amaan Qureshi <amaanq12@gmail.com>
+ * @author Matthias Wahl <matthiaswahl@m7w3.de>
+ * @see {@link https://www.ponylang.io|official website}
+ * @see {@link https://tutorial.ponylang.io|official tutorial}
  * @license MIT
  */
 
@@ -26,17 +29,20 @@ const PREC = {
 module.exports = grammar({
   name: 'pony',
 
-  conflicts: $ => [
-    [$.expression, $.generic_expression],
+  externals: $ => [
+    $._type_args_start,
+    $.block_comment,
   ],
 
   extras: $ => [
-    $.comment,
+    $.line_comment,
+    $.block_comment,
     /\s/,
   ],
 
   supertypes: $ => [
     $.expression,
+    $.literal,
     $.statement,
     $.type,
   ],
@@ -270,7 +276,11 @@ module.exports = grammar({
       optional($.type_args),
     )),
 
-    type_args: $ => seq('[', commaSep1($.type), ']'),
+    type_args: $ => seq(
+      alias($._type_args_start, '['),
+      commaSep1($.type),
+      ']',
+    ),
 
     read_type: $ => seq(choice($.base_type, $.lambda_type), '#read'),
     send_type: $ => seq(choice($.base_type, $.lambda_type), '#send'),
@@ -323,7 +333,7 @@ module.exports = grammar({
 
     block: $ => prec.left(seq($.expression, repeat(seq(optional(';'), $.expression)))),
 
-    expression: $ => choice(
+    expression: $ => (choice(
       $.unary_expression,
       $.binary_expression,
       $.assignment_expression,
@@ -357,10 +367,10 @@ module.exports = grammar({
       $.error,
       $.compile_intrinsic,
       $.compile_error,
-    ),
+    )),
 
     error: _ => 'error',
-    compile_intrinsic: $ => 'compile_intrinsic',
+    compile_intrinsic: _ => 'compile_intrinsic',
     compile_error: $ => prec.left(seq('compile_error', optional($.string))),
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
@@ -419,14 +429,21 @@ module.exports = grammar({
       $.type,
     )),
 
-    call_expression: $ => prec.left(PREC.CALL, seq(
+    call_expression: $ => prec(PREC.CALL, seq(
       field('callee', $.expression),
-      '(',
+      token.immediate('('),
       commaSep($.expression),
       optional($.named_arguments),
       ')',
       optional('?'),
     )),
+
+    chain_expression: $ => prec.right(PREC.CALL, seq(
+      $.expression,
+      '.>',
+      $.expression,
+    )),
+
     named_arguments: $ => seq(
       'where',
       commaSep(seq($.identifier, '=', $.expression)),
@@ -462,19 +479,13 @@ module.exports = grammar({
       ')',
     ),
 
-    partial_application: $ => prec.right(PREC.MEMBER, seq(
+    partial_application: $ => prec.left(PREC.MEMBER, seq(
       $.expression,
       '~',
       $.expression,
     )),
 
-    chain_expression: $ => prec.right(PREC.MEMBER, seq(
-      $.expression,
-      '.>',
-      $.expression,
-    )),
-
-    member_expression: $ => prec.right(PREC.MEMBER, seq(
+    member_expression: $ => prec.left(PREC.MEMBER, seq(
       $.expression,
       '.',
       $.expression,
@@ -558,16 +569,17 @@ module.exports = grammar({
       optional($.then_block),
       'end',
     ),
-    with_elem: $ => seq(
-      $.identifier,
-      '=',
-      $.block,
-    ),
+
     with_statement: $ => seq(
       'with',
       optional($.annotation),
       commaSep1($.with_elem),
       $.do_block,
+    ),
+    with_elem: $ => seq(
+      $.identifier,
+      '=',
+      $.block,
     ),
 
     repeat_statement: $ => seq(
@@ -633,11 +645,7 @@ module.exports = grammar({
       optional(seq('=', field('default', $.type))),
     ),
 
-    generic_parameters: $ => seq(
-      '[',
-      commaSep1($.generic_parameter),
-      ']',
-    ),
+    generic_parameters: $ => seq('[', commaSep1($.generic_parameter), ']'),
 
     literal: $ => choice(
       $.array_literal,
@@ -734,7 +742,6 @@ module.exports = grammar({
       $._string_literal,
     )),
 
-
     _escape_sequence: $ => choice(
       prec(2, token.immediate(seq('\\', /[^abfnrtvxu'\"\\\?]/))),
       prec(1, $.escape_sequence),
@@ -753,15 +760,12 @@ module.exports = grammar({
 
     boolean: _ => choice('true', 'false'),
 
-    identifier: _ => /[a-zA-Z_][a-zA-Z0-9_']*/,
-    ffi_identifier: $ => seq('@', choice($.identifier, $.string)),
-
     this: _ => 'this',
 
-    comment: _ => token(choice(
-      seq('//', /(\\(.|\r?\n)|[^\\\n])*/),
-      seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'),
-    )),
+    identifier: _ => token(prec(-1, /[a-zA-Z_][a-zA-Z0-9_']*/)),
+    ffi_identifier: $ => seq('@', choice($.identifier, $.string)),
+
+    line_comment: _ => token(seq('//', /(\\(.|\r?\n)|[^\\\n])*/)),
   },
 });
 
