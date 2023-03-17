@@ -263,7 +263,6 @@ module.exports = grammar({
       $.viewpoint_type,
       $.lambda_type,
       $.this,
-      $.none,
     ),
 
     base_type: $ => prec.right(seq(
@@ -355,7 +354,6 @@ module.exports = grammar({
       $.identifier,
       $.ffi_identifier,
       $.this,
-      $.none,
       $.error,
       $.compile_intrinsic,
       $.compile_error,
@@ -757,8 +755,6 @@ module.exports = grammar({
     ffi_identifier: $ => seq('@', choice($.identifier, $.string)),
 
     this: _ => 'this',
-
-    none: _ => 'None',
 
     comment: _ => token(choice(
       seq('//', /(\\(.|\r?\n)|[^\\\n])*/),
