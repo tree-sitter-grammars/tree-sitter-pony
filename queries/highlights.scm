@@ -1,45 +1,47 @@
-(comment) @comment
+; Includes
 
 [
-  "("
-  ")"
-  "{"
-  "}"
-  "["
-  "]"
-] @punctuation.bracket
-
-[
-  ";"
-  "."
-  ","
-] @punctuation.delimiter
-
-[
-  "if"
-  "ifdef"
-  "then"
-  "else"
-  "elseif"
-  "end"
-  "try"
-  "while"
-  "for"
   "use"
-  "as"
-  "var"
-  "let"
-  "embed"
-  "fun"
-  "be"
-  "new"
+] @include
+
+; Keywords
+
+[
+  "type"
   "actor"
   "class"
-  "struct"
   "primitive"
   "interface"
   "trait"
-  "type"
+  "struct"
+  "embed"
+  "let"
+  "var"
+  (compile_intrinsic)
+  "as"
+  "consume"
+  "recover"
+  "object"
+  "where"
+] @keyword
+
+[
+  "fun"
+  "be"
+] @keyword.function
+
+[
+  "in"
+  "is"
+] @keyword.operator
+
+[
+  "return"
+] @keyword.return
+
+; Qualifiers
+
+[
   "iso"
   "trn"
   "ref"
@@ -51,82 +53,235 @@
   "#share"
   "#alias"
   "#any"
-] @keyword
+] @type.qualifier
 
-;; Operators
+; Conditionals
+
 [
- "?"
- "=>"
+  "if"
+  "ifdef"
+  "iftype"
+  "then"
+  "else"
+  "elseif"
+  "until"
+  "match"
+] @conditional
 
- "~"
- ".>"
+(if_statement "end" @conditional)
 
- "+"
- "-"
- "*"
- "/"
- "%"
- "%%"
- "+~"
- "-~"
- "/~"
- "*~"
- "%~"
- "%%~"
+(iftype_statement "end" @conditional)
 
- ">>"
- "<<"
- ">>~"
- "<<~"
+(match_expression "end" @conditional)
 
- "=="
- "!="
- ">"
- "<"
- ">="
- "<="
+; Repeats
 
- "and"
- "or"
- "xor"
- "is"
- "isnt"
- "not"
+[
+  "repeat"
+  "while"
+  "for"
+  "continue"
+  "do"
+  "break"
+] @repeat
+
+(do_block "end" @repeat)
+
+(repeat_statement "end" @repeat)
+
+; Exceptions
+
+[
+  "try"
+  (error)
+  "compile_error"
+] @exception
+
+(try_statement "end" @exception)
+
+(recover_expression "end" @exception)
+
+; Attributes
+
+(annotation) @attribute
+
+; Variables
+
+(identifier) @variable
+
+(this) @variable.builtin
+
+; Fields
+
+(field name: (identifier) @field)
+
+(member_expression "." (identifier) @field)
+
+; Constructors
+
+(constructor "new" @constructor (identifier) @constructor)
+
+; Methods
+
+(method (identifier) @method)
+
+(behavior (identifier) @method)
+
+(ffi_method (identifier) @method)
+
+((ffi_method (string) @string.special)
+  (#set! "priority" 105))
+
+(call_expression
+  callee:
+    [
+      (identifier) @method.call
+      (ffi_identifier (identifier) @method.call)
+      (member_expression "." (identifier) @method.call)
+    ])
+
+; Parameters
+
+(parameter name: (identifier) @parameter)
+(lambda_parameter name: (identifier) @parameter)
+
+; Types
+
+(base_type name: (identifier) @type)
+
+(generic_parameter (identifier) @type)
+
+(lambda_type (identifier)? @method)
+
+((identifier) @type
+  (#lua-match? @type "^_*[A-Z][a-zA-Z0-9_]*$"))
+
+; Operators
+
+(unary_expression
+  operator: ["not" "addressof" "digestof"] @keyword.operator)
+
+(binary_expression
+  operator: ["and" "or" "xor" "is" "isnt"] @keyword.operator)
+
+[
+  "="
+  "?"
+  "|"
+  "&"
+  "-~"
+  "+"
+  "-"
+  "*"
+  "/"
+  "%"
+  "%%"
+  "<<"
+  ">>"
+  "=="
+  "!="
+  ">"
+  ">="
+  "<="
+  "<"
+  "+~"
+  "-~"
+  "*~"
+  "/~"
+  "%~"
+  "%%~"
+  "<<~"
+  ">>~"
+  "==~"
+  "!=~"
+  ">~"
+  ">=~"
+  "<=~"
+  "<~"
+  "+?"
+  "-?"
+  "*?"
+  "/?"
+  "%?"
+  "%%?"
+  "<:"
 ] @operator
 
-(boolean) @contant.builtin
-[
-  (number)
-  (float)
-] @number
+; Literals
 
-;; strings/docstrings
-(source_file . (string) @string.special)
-(actor_definition (identifier) @type (string)? @string.special)
-(class_definition (identifier) @type (string)? @string.special)
-(primitive_definition (identifier) @type (string)? @string.special)
-(interface_definition (identifier) @type (string)? @string.special)
-(trait_definition (identifier) @type (string)? @string.special)
-(struct_definition (identifier) @type (string)? @string.special)
-(type_alias (identifier) @type (string)? @string.special)
-
-(constructor (identifier) @constructor (string)? @string.special)
-(method (identifier) @function.method (string)? @string.special)
-(behavior (identifier) @function.method (string)? @string.special)
-(constructor (block . (literal (string)) @string.special))
-(method (block . (literal (string)) @string.special))
-(behavior (block . (literal (string)) @string.special))
 (string) @string
 
-(field name: (identifier) @property)
-(parameter name: (identifier) @variable.parameter)
-(lambda_parameter name: (identifier) @variable.parameter)
+(source_file (string) @string.documentation)
+(actor_definition (string) @string.documentation)
+(class_definition (string) @string.documentation)
+(primitive_definition (string) @string.documentation)
+(interface_definition (string) @string.documentation)
+(trait_definition (string) @string.documentation)
+(struct_definition (string) @string.documentation)
+(type_alias (string) @string.documentation)
+(field (string) @string.documentation)
 
-; types
-(base_type name: (identifier)+ @type)
-(generic_parameter (identifier) @type)
-(lambda_type (identifier)? @function.method)
+(constructor
+  [
+   (string) @string.documentation
+   (block . (string) @string.documentation)
+  ])
 
-; variables
-(variable_declaration (identifier) @variable)
-(identifier) @variable
+(method
+  [
+   (string) @string.documentation
+   (block . (string) @string.documentation)
+  ])
+
+(behavior
+  [
+   (string) @string.documentation
+   (block . (string) @string.documentation)
+  ])
+
+(character) @character
+
+(escape_sequence) @string.escape
+
+(number) @number
+
+(float) @float
+
+(boolean) @boolean
+
+; Punctuation
+
+[ "{" "}" ] @punctuation.bracket
+
+[ "[" "]" ] @punctuation.bracket
+
+[ "(" ")" ] @punctuation.bracket
+
+[
+  "."
+  ","
+  ";"
+  ":"
+  "~"
+  ".>"
+  "->"
+  "=>"
+] @punctuation.delimiter
+
+[
+  "@"
+  "!"
+  "^"
+  "..."
+] @punctuation.special
+
+; Comments
+
+[
+  (line_comment)
+  (block_comment)
+] @comment @spell
+
+; Errors
+
+(ERROR) @error
