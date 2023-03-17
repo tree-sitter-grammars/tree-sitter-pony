@@ -33,8 +33,14 @@ module.exports = grammar({
   ],
 
   extras: $ => [
-    $.comment,
+    $.line_comment,
+    $.block_comment,
     /\s/,
+  ],
+  externals: $ => [
+    $.block_comment,
+    $.string,
+    $.character,
   ],
 
   supertypes: $ => [
@@ -691,66 +697,65 @@ module.exports = grammar({
         seq(dot_decimal, optional(exponent)),
       ));
     },
-
-    string: $ => choice($._string_literal, $._multiline_string_literal),
-
-    _string_literal: $ => seq(
-      '"',
-      repeat(choice(
-        $.string_content,
-        $._escape_sequence,
-      )),
-      '"',
-    ),
-    _multiline_string_literal: $ => prec.right(seq(
-      '"""',
-      repeat(choice(
-        alias($._multiline_string_content, $.string_content),
-        $._escape_sequence,
-      )),
-      '"""',
-    )),
-
-    character: $ => seq(
-      '\'',
-      repeat1(
-        choice(
-          $.character_content,
-          $._escape_sequence,
-        ),
-      ),
-      '\'',
-    ),
-    character_content: _ => token.immediate(prec(2, /[^'\\]+/)),
-
-    // Workaround to https://github.com/tree-sitter/tree-sitter/issues/1156
-    // We give names to the token_ constructs containing a regexp
-    // so as to obtain a node in the CST.
+    //    string: $ => choice($._string_literal, $._multiline_string_literal),
     //
-    string_content: _ => token.immediate(prec(1, /[^"\\]+/)),
-    _multiline_string_content: _ =>
-      prec.right(choice(
-        /[^"]+/,
-        seq(/"[^"]*/, repeat(/[^"]+/)),
-      )),
-
-
-    _escape_sequence: $ => choice(
-      prec(2, token.immediate(seq('\\', /[^abfnrtvxu'\"\\\?]/))),
-      prec(1, $.escape_sequence),
-    ),
-
-    escape_sequence: _ => token.immediate(seq(
-      '\\',
-      choice(
-        /[^xu0-7]/,
-        /[0-7]{1,3}/,
-        /x[0-9a-fA-F]{2}/,
-        /u[0-9a-fA-F]{4}/,
-        /u{[0-9a-fA-F]+}/,
-        /U[0-9a-fA-F]{8}/,
-      ))),
-
+    //    _string_literal: $ => seq(
+    //      '"',
+    //      repeat(choice(
+    //        $.string_content,
+    //        $._escape_sequence,
+    //      )),
+    //      '"',
+    //    ),
+    //    _multiline_string_literal: $ => prec.right(seq(
+    //      '"""',
+    //      repeat(choice(
+    //        alias($._multiline_string_content, $.string_content),
+    //        $._escape_sequence,
+    //      )),
+    //      '"""',
+    //    )),
+    //
+    //    character: $ => seq(
+    //      '\'',
+    //      repeat1(
+    //        choice(
+    //          $.character_content,
+    //          $._escape_sequence,
+    //        ),
+    //      ),
+    //      '\'',
+    //    ),
+    //    character_content: _ => token.immediate(prec(2, /[^'\\]+/)),
+    //
+    //    // Workaround to https://github.com/tree-sitter/tree-sitter/issues/1156
+    //    // We give names to the token_ constructs containing a regexp
+    //    // so as to obtain a node in the CST.
+    //    //
+    //    string_content: _ => token.immediate(prec(1, /[^"\\]+/)),
+    //    _multiline_string_content: _ =>
+    //      prec.right(choice(
+    //        /[^"]+/,
+    //        seq(/"[^"]*/, repeat(/[^"]+/)),
+    //      )),
+    //
+    //
+    //    _escape_sequence: $ => choice(
+    //      prec(2, token.immediate(seq('\\', /[^abfnrtvxu'\"\\\?]/))),
+    //      prec(1, $.escape_sequence),
+    //    ),
+    //
+    //    escape_sequence: _ => token.immediate(seq(
+    //      '\\',
+    //      choice(
+    //        /[^xu0-7]/,
+    //        /[0-7]{1,3}/,
+    //        /x[0-9a-fA-F]{2}/,
+    //        /u[0-9a-fA-F]{4}/,
+    //        /u{[0-9a-fA-F]+}/,
+    //        /U[0-9a-fA-F]{8}/,
+    //      ))),
+    //
     boolean: _ => choice('true', 'false'),
 
     identifier: _ => /[a-zA-Z_][a-zA-Z0-9_']*/,
@@ -758,10 +763,12 @@ module.exports = grammar({
 
     this: _ => 'this',
 
-    comment: _ => token(choice(
+    line_comment: _ => token(
+      // choice(
       seq('//', /(\\(.|\r?\n)|[^\\\n])*/),
-      seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'),
-    )),
+      // seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'),
+      // )
+    ),
   },
 });
 

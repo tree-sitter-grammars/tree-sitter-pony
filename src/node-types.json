@@ -829,25 +829,6 @@
     }
   },
   {
-    "type": "character",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "character_content",
-          "named": true
-        },
-        {
-          "type": "escape_sequence",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "class_definition",
     "named": true,
     "fields": {},
@@ -2042,30 +2023,6 @@
     }
   },
   {
-    "type": "string",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "escape_sequence",
-          "named": true
-        },
-        {
-          "type": "string_content",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "string_content",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "struct_definition",
     "named": true,
     "fields": {},
@@ -2541,14 +2498,6 @@
     "named": false
   },
   {
-    "type": "\"",
-    "named": false
-  },
-  {
-    "type": "\"\"\"",
-    "named": false
-  },
-  {
     "type": "#alias",
     "named": false
   },
@@ -2594,10 +2543,6 @@
   },
   {
     "type": "&",
-    "named": false
-  },
-  {
-    "type": "'",
     "named": false
   },
   {
@@ -2797,6 +2742,10 @@
     "named": false
   },
   {
+    "type": "block_comment",
+    "named": true
+  },
+  {
     "type": "box",
     "named": false
   },
@@ -2805,16 +2754,12 @@
     "named": false
   },
   {
-    "type": "character_content",
+    "type": "character",
     "named": true
   },
   {
     "type": "class",
     "named": false
-  },
-  {
-    "type": "comment",
-    "named": true
   },
   {
     "type": "compile_error",
@@ -2858,10 +2803,6 @@
   },
   {
     "type": "error",
-    "named": true
-  },
-  {
-    "type": "escape_sequence",
     "named": true
   },
   {
@@ -2921,6 +2862,10 @@
     "named": false
   },
   {
+    "type": "line_comment",
+    "named": true
+  },
+  {
     "type": "match",
     "named": false
   },
@@ -2963,6 +2908,10 @@
   {
     "type": "return",
     "named": false
+  },
+  {
+    "type": "string",
+    "named": true
   },
   {
     "type": "struct",

@@ -7,11 +7,7 @@ Single Quoted String
 ---
 
 (source_file 
-  (string
-    (string_content)
-    (escape_sequence)
-    (string_content)
-  )
+  (string)
 )
 
 ===================
@@ -40,7 +36,7 @@ use
 ---
 
 (source_file 
-  (string (string_content))
+  (string)
 )
 
 ===================
@@ -66,7 +62,7 @@ use "foo"
 ---
 
 (source_file
-  (string (string_content) (string_content) (string_content))
+  (string)
 )
 
 =========================
@@ -80,7 +76,7 @@ Block Quote Triple String
 
 ---
 
-(source_file (comment))
+(source_file (block_comment))
 
 ================================
 Block Quote before Triple String
@@ -94,6 +90,29 @@ hdfjdf
 ---
 
 (source_file 
-  (comment)
-  (string (string_content))
+  (block_comment)
+  (string)
 )
+
+==============
+4-quote string
+==============
+
+primitive Foo
+  fun apply(): String =>
+    """"Foo""""
+
+---
+(source_file
+  (primitive_definition
+    (identifier)
+    (method
+      (identifier)
+      (parameters)
+      returns: (base_type name: (identifier))
+      (block (literal (string)))
+    )
+  )
+)
+
+

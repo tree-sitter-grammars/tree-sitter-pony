@@ -7,11 +7,11 @@ use "snot" if 'A'
 ---
 (source_file
   (use_statement
-    (string (string_content))
+    (string)
     (platform_specifier
       (if_block
         (block
-          (literal (character (character_content)))
+          (literal (character))
         )
       )
     )
@@ -26,15 +26,12 @@ use "snot" if '\xFF\''
 ---
 (source_file
   (use_statement
-    (string (string_content))
+    (string)
     (platform_specifier
       (if_block
         (block
           (literal 
-            (character
-              (escape_sequence)
-              (escape_sequence)
-            )
+            (character)
           )
         )
       )
@@ -50,16 +47,12 @@ use "snot" if 'A\nBCDEFGH'
 ---
 (source_file
   (use_statement
-    (string (string_content))
+    (string)
     (platform_specifier
       (if_block
         (block
           (literal
-            (character
-              (character_content)
-              (escape_sequence)
-              (character_content)
-            )
+            (character)
           )
         )
       )

@@ -7,7 +7,7 @@ use "math"
 ---
 (source_file
   (use_statement
-    (string (string_content))
+    (string)
   )
 )
 
@@ -23,7 +23,7 @@ foo = "foo"
 (source_file 
   (use_statement
     (identifier)
-    (string (string_content))
+    (string)
   ))
 
 =======================
@@ -39,12 +39,12 @@ use "foo"
 
 (source_file
   (use_statement
-    (string (string_content)))
+    (string))
   (use_statement
     (identifier)
-    (string (string_content)))
+    (string))
   (use_statement
-    (string (string_content)))
+    (string))
 )
 
 ========
@@ -85,7 +85,7 @@ use "package" if consume iso foo
 
 (source_file
   (use_statement
-    (string (string_content))
+    (string)
     (platform_specifier
       (if_block
         (block 

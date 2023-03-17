@@ -8,7 +8,7 @@ use "snot" if not badger
 
 (source_file
   (use_statement
-    (string (string_content))
+    (string)
     (platform_specifier
       (if_block
         (block
@@ -37,7 +37,7 @@ use "snot" if [
 ---
 (source_file
   (use_statement
-    (string (string_content))
+    (string)
     (platform_specifier
       (if_block
         (block
@@ -108,8 +108,8 @@ primitive Snot
       (identifier)
       (parameters)
       (block
-        (literal (string (string_content)))
-        (literal (string (string_content)))
+        (literal (string))
+        (literal (string))
       )
     )
   )
@@ -188,13 +188,13 @@ primitive Foo
         (if_statement
           (if_block
             (block
-              (literal (string (string_content)))
+              (literal (string))
               (literal (boolean))
             )
           )
           (then_block
             (block
-              (literal (string (string_content)))
+              (literal (string))
             )
           )
         )
@@ -280,7 +280,7 @@ primitive Foo
         )
         (call_expression
           callee: (ffi_identifier (identifier))
-          (literal (string (string_content)))
+          (literal (string))
         )
       )
     )
@@ -317,17 +317,17 @@ primitive Foo[A]
           (base_type (identifier))
           (base_type (identifier))
           (then_block
-            (block (literal (string (string_content))))
+            (block (literal (string)))
           )
           (elseiftype_block
             (base_type (identifier))
             (base_type (identifier))
             (then_block
-              (block (literal (string (string_content))))
+              (block (literal (string)))
             )
           )
           (else_block
-            (block (literal (string (string_content))))
+            (block (literal (string)))
           )
         )
       )
@@ -465,3 +465,18 @@ primitive Foo
   )
 )
 
+
+====================
+Nested Block Comment
+====================
+
+/**
+  *
+  /* nested */
+  */
+trait Empty
+---
+(source_file
+  (block_comment)
+  (trait_definition (identifier))
+)

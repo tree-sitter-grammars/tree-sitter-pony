@@ -31,21 +31,21 @@ actor Main
 ---
 
 (source_file 
-  (string (string_content))
+  (string)
   (actor_definition
     (identifier) 
-    docstring: (string (string_content))
+    docstring: (string)
     (field
       name: (identifier)
       (base_type name: (identifier))
-      docstring: (string (string_content))
+      docstring: (string)
     )
     (field
       name: (identifier)
       (ref_type
         (base_type name: (identifier)))
-      (literal (string (string_content)))
-      docstring: (string (string_content))
+      (literal (string))
+      docstring: (string)
     )
     (field
       name: (identifier)
@@ -69,7 +69,7 @@ actor Main
         )
       )
       (block
-        (literal (string (string_content)))
+        (literal (string))
         (consume_expression (identifier))
       )
     )
@@ -88,7 +88,7 @@ actor Main
         )
       )
       (block
-        (literal (string (string_content)))
+        (literal (string))
       )
     )
   )
@@ -112,7 +112,7 @@ actor Main
 ---
 (source_file
   (use_statement
-    (string (string_content))
+    (string)
     (platform_specifier (if_block (block (identifier))))
   )
   (actor_definition
@@ -135,7 +135,7 @@ actor Main
             )
           )
           (binary_expression
-            left: (literal (string (string_content)))
+            left: (literal (string))
             right: (literal (number))
           )
         )
@@ -207,7 +207,7 @@ class MT is Random
   (class_definition
     (identifier)
     (base_type name: (identifier))
-    (string (string_content))
+    (string)
     (field
       name: (identifier)
       (base_type
@@ -236,7 +236,7 @@ class MT is Random
         )
       )
       (block
-        (literal (string (string_content)))
+        (literal (string))
         (assignment_expression
           (identifier)
           (block
@@ -282,7 +282,7 @@ interface Notify
 (source_file
   (interface_definition
     (identifier)
-    (string (string_content))
+    (string)
     (method
       (capability)
       (identifier)
@@ -301,7 +301,7 @@ interface Notify
         ) 
       )
       returns: (base_type name: (identifier))
-      (string (string_content))
+      (string)
     )
   )
 )

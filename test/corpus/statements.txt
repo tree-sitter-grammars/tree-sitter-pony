@@ -34,7 +34,7 @@ primitive ContainsWith
             )
           )
           (do_block
-            (comment)
+            (line_comment)
             (block
               (call_expression
                 callee: (member_expression
