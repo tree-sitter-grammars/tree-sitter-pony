@@ -726,11 +726,13 @@ module.exports = grammar({
     // so as to obtain a node in the CST.
     //
     string_content: _ => token.immediate(prec(1, /[^"\\]+/)),
-    _multiline_string_content: _ =>
-      prec.right(choice(
-        /[^"]+/,
-        seq(/"[^"]*/, repeat(/[^"]+/)),
-      )),
+    _multiline_string_content: $ => prec.right(choice(
+      /[^"]+/,
+      seq(/"[^"]*/, repeat(/[^"]+/)),
+      // To account for content that ends in a quote immediately followed by the triple quote
+      // e.g. """"Foo"""" will be parsed as """, content: "Foo", """
+      $._string_literal,
+    )),
 
 
     _escape_sequence: $ => choice(

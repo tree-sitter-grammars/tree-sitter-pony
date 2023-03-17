@@ -5514,6 +5514,10 @@
                 }
               }
             ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_string_literal"
           }
         ]
       }
