@@ -24,32 +24,21 @@ primitive ContainsWith
           (with_elem
             (identifier)
             (block
-              (call_expression callee: (identifier))
-            )
-          )
+              (call_expression
+                (identifier))))
           (with_elem
             (identifier)
             (block
-              (call_expression callee: (identifier))
-            )
-          )
+              (call_expression
+                (identifier))))
           (do_block
-            (comment)
+            (line_comment)
             (block
               (call_expression
-                callee: (member_expression
+                (member_expression
                   (identifier)
-                  (identifier)
-                )
-                (identifier)
-              )
-            )
+                  (identifier))
+                (identifier)))
             (else_block
-              (block (identifier))
-            )
-          )
-        )
-      )
-    )
-  )
-)
+              (block
+                (identifier)))))))))

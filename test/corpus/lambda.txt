@@ -5,6 +5,7 @@ Lambda Type
 primitive Lambda
   fun lambda(callback: {box function_name[T](Argument[T]): ReturnType? } iso): ReturnType? =>
     callback.function_name[U8](Argument[U8])?
+
 ---
 
 (source_file
@@ -14,50 +15,38 @@ primitive Lambda
       (identifier)
       (parameters
         (parameter
-          name: (identifier)
+          (identifier)
           (iso_type
             (lambda_type
               (capability)
               (identifier)
               (type_parameters
-                (generic_parameter (identifier))
-              )
+                (generic_parameter
+                  (identifier)))
               (lambda_parameters
                 (base_type
-                  name: (identifier)
+                  (identifier)
                   (type_args
-                    (base_type name: (identifier))
-                  )
-                )
-              )
-              returns: (base_type name: (identifier))
-            )
-          )
-        )
-      )
-      returns: (base_type name: (identifier))
+                    (base_type
+                      (identifier)))))
+              (base_type
+                (identifier))))))
+      (base_type
+        (identifier))
       (block
         (call_expression
-          callee: (member_expression
+          (member_expression
             (identifier)
             (generic_expression
               (identifier)
               (type_args
-                (base_type name: (identifier))
-              )
-            )
-          )
+                (base_type
+                  (identifier)))))
           (generic_expression
             (identifier)
             (type_args
-              (base_type name: (identifier))
-            )
-          )
-        )
-      )
-    )
-  )
-)
+              (base_type
+                (identifier)))))))))
 
 ======
 Lambda
@@ -72,27 +61,21 @@ class Lambda
   (class_definition
     (identifier)
     (field
-      name: (identifier)
+      (identifier)
       (lambda_type
         (lambda_parameters
-          (base_type name: (identifier))
-        )
-        returns: (base_type name: (identifier))
-      )
+          (base_type
+            (identifier)))
+        (base_type
+          (identifier)))
       (lambda_expression
-        (lambda_parameter name: (identifier))
+        (lambda_parameter
+          (identifier))
         (block
           (call_expression
-            callee: (member_expression
+            (member_expression
               (identifier)
-              (identifier)
-            )
-          )
-        )
-      )
-    )
-  )
-)
+              (identifier))))))))
 
 ========
 No Args
@@ -100,6 +83,7 @@ No Args
 
 class Lambda
   let throw_fn: {ref ()} = {() => None } ref
+
 ---
 
 (source_file
@@ -109,15 +93,11 @@ class Lambda
       (identifier)
       (lambda_type
         (capability)
-        (lambda_parameters)
-      )
+        (lambda_parameters))
       (lambda_expression
-        (block (identifier))
-        (capability)
-      )
-    )
-  )
-)
+        (block
+          (identifier))
+        (capability)))))
 
 ===============
 Lambda Captures
@@ -139,33 +119,22 @@ class Captures
       (block
         (assignment_expression
           (variable_declaration
-            (identifier)
-          )
+            (identifier))
           (block
-            (literal (boolean))
-          )
-        )
+            (boolean)))
         (assignment_expression
           (variable_declaration
-            (identifier)
-          )
+            (identifier))
           (block
             (lambda_expression
-              (lambda_captures 
+              (lambda_captures
                 (identifier)
-                (base_type (identifier))
-                (identifier)
-              )
+                (base_type
+                  (identifier))
+                (identifier))
               (block
-                (unary_expression (identifier))
-              )
-            )
-          )
-        )
-      )
-    )
-  )
-)
+                (unary_expression
+                  (identifier))))))))))
 
 ==============
 Object Literal
@@ -191,73 +160,46 @@ primitive ObjectLiteral
       (block
         (assignment_expression
           (variable_declaration
-            (identifier)
-          )
+            (identifier))
           (block
-            (literal
-              (object_literal
-                (method
-                  (identifier)
-                  (parameters)
-                  (base_type (identifier))
-                  (block
-                    (call_expression
-                      (member_expression
-                        (parenthesized_expression
+            (object_literal
+              (method
+                (identifier)
+                (parameters)
+                (base_type
+                  (identifier))
+                (block
+                  (call_expression
+                    (member_expression
+                      (parenthesized_expression
+                        (chain_expression
+                          (identifier)
                           (call_expression
-                            (chain_expression
-                              (identifier)
-                              (identifier)
-                            )
-                          )
-                        )
-                        (identifier)
-                      )
-                    )
-                  )
-                )
-                (behavior
-                  (identifier)
-                  (generic_parameters
-                    (generic_parameter
+                            (identifier))))
+                      (identifier)))))
+              (behavior
+                (identifier)
+                (generic_parameters
+                  (generic_parameter
+                    (identifier)
+                    (read_type
+                      (base_type
+                        (identifier)))))
+                (parameters
+                  (parameter
+                    (identifier)
+                    (ephemeral_type
+                      (iso_type
+                        (base_type
+                          (identifier)
+                          (type_args
+                            (base_type
+                              (identifier))))))))
+                (block
+                  (call_expression
+                    (member_expression
                       (identifier)
-                      (read_type
-                        (base_type (identifier))
-                      )
-                    )
-                  )
-                  (parameters
-                    (parameter
-                      (identifier)
-                      (ephemeral_type
-                        (iso_type
-                          (base_type
-                            (identifier)
-                            (type_args
-                              (base_type (identifier))
-                            )
-                          )
-                        )
-                      )
-                    )
-                  )
-                  (block
-                    (call_expression
-                      (member_expression
-                        (identifier)
-                        (identifier)
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-  )
-)
+                      (identifier))))))))))))
 
 ===========
 Bare Lambda
@@ -277,86 +219,70 @@ actor Main
   (use_statement
     (ffi_method
       (identifier)
-      returns: (lambda_type
+      (lambda_type
         (lambda_parameters
-          (base_type name: (identifier))
-        )
-        returns: (base_type name: (identifier))
-      )
+          (base_type
+            (identifier)))
+        (base_type
+          (identifier)))
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
-      )
-    )
-  )
+          (identifier)
+          (base_type
+            (identifier))))))
   (actor_definition
     (identifier)
     (constructor
       (identifier)
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
-      )
+          (identifier)
+          (base_type
+            (identifier))))
       (block
         (assignment_expression
-          (variable_declaration (identifier))
+          (variable_declaration
+            (identifier))
           (block
             (call_expression
-              callee: (ffi_identifier (identifier))
-              (literal (number))
-            )
-          )
-        )
+              (ffi_identifier
+                (identifier))
+              (number))))
         (assignment_expression
           (variable_declaration
             (identifier)
             (lambda_type
               (lambda_parameters
-                (base_type name: (identifier))
-                (base_type name: (identifier))
-              )
-              returns: (base_type name: (identifier))
-            )
-          )
+                (base_type
+                  (identifier))
+                (base_type
+                  (identifier)))
+              (base_type
+                (identifier))))
           (block
             (call_expression
-              callee: (generic_expression
-                (ffi_identifier (identifier))
+              (generic_expression
+                (ffi_identifier
+                  (identifier))
                 (type_args
                   (lambda_type
                     (lambda_parameters
-                      (base_type name: (identifier))
-                      (base_type name: (identifier))
-                    )
-                    returns: (base_type name: (identifier))
-                  )
-                )
-              )
-              (literal (number))
-            )
-          )
-        )
+                      (base_type
+                        (identifier))
+                      (base_type
+                        (identifier)))
+                    (base_type
+                      (identifier)))))
+              (number))))
         (assignment_expression
-          (variable_declaration (identifier))
+          (variable_declaration
+            (identifier))
           (block
             (call_expression
-              callee: (identifier)
+              (identifier)
               (call_expression
-                callee: (identifier)
-                (literal (number))
-              )
+                (identifier)
+                (number))
               (call_expression
-                callee: (identifier)
-                (literal (number))
-              )
-            )
-          )
-        )
-      )
-    )
-  )
-)
+                (identifier)
+                (number)))))))))
