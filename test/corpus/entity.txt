@@ -30,72 +30,69 @@ actor Main
 
 ---
 
-(source_file 
-  (string (string_content))
+(source_file
+  (string
+    (string_content))
   (actor_definition
-    (identifier) 
-    (string (string_content))
+    (identifier)
+    (string
+      (string_content))
     (field
-      name: (identifier)
-      (base_type name: (identifier))
-      (string (string_content))
-    )
+      (identifier)
+      (base_type
+        (identifier))
+      (string
+        (string_content)))
     (field
-      name: (identifier)
+      (identifier)
       (ref_type
-        (base_type name: (identifier)))
-      (literal (string (string_content)))
-      (string (string_content))
-    )
-    (field
-      name: (identifier)
-      (intersection_type
-        (base_type name: (identifier))
         (base_type
-          name: (identifier)
+          (identifier)))
+      (string
+        (string_content))
+      (string
+        (string_content)))
+    (field
+      (identifier)
+      (intersection_type
+        (base_type
+          (identifier))
+        (base_type
+          (identifier)
           (type_args
-            (base_type name: (identifier))
-          )
-        )
-      )
-    )
+            (base_type
+              (identifier))))))
     (constructor
       (capability)
       (identifier)
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
-      )
+          (identifier)
+          (base_type
+            (identifier))))
       (block
-        (literal (string (string_content)))
-        (consume_expression (identifier))
-      )
-    )
+        (string
+          (string_content))
+        (consume_expression
+          (identifier))))
     (behavior
       (identifier)
       (generic_parameters
         (generic_parameter
           (identifier)
-          (base_type name: (identifier))
-        )
-      )
+          (base_type
+            (identifier))))
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
-      )
+          (identifier)
+          (base_type
+            (identifier))))
       (block
-        (literal (string (string_content)))
-      )
-    )
-  )
-)
+        (string
+          (string_content))))))
 
 =============
-Method quirks
+Method Quirks
 =============
 
 use "collection" if windows
@@ -110,77 +107,64 @@ actor Main
     foo~partial(56.7)
 
 ---
+
 (source_file
   (use_statement
-    (string (string_content))
-    (platform_specifier (if_block (block (identifier))))
-  )
+    (string
+      (string_content))
+    (platform_specifier
+      (if_block
+        (block
+          (identifier)))))
   (actor_definition
     (identifier)
     (constructor
       (identifier)
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
-      )
+          (identifier)
+          (base_type
+            (identifier))))
       (block
         (call_expression
-          callee: (member_expression
-            (identifier)
+          (member_expression
             (member_expression
               (identifier)
-              (identifier)
-            )
-          )
+              (identifier))
+            (identifier))
           (binary_expression
-            left: (literal (string (string_content)))
-            right: (literal (number))
-          )
-        )
-      )
-    )
+            (string
+              (string_content))
+            (number)))))
     (method
       (capability)
       (identifier)
       (parameters)
-      returns: (base_type name: (identifier))
+      (base_type
+        (identifier))
       (block
-        (literal (boolean))
-      )
-    )
+        (boolean)))
     (behavior
       (identifier)
       (generic_parameters
         (generic_parameter
           (identifier)
-          (base_type name: (identifier))
-        )
-      )
+          (base_type
+            (identifier))))
       (parameters
         (parameter
-          name: (identifier)
+          (identifier)
           (base_type
-            name: (identifier)
+            (identifier)
             (type_args
-              (base_type name: (identifier))
-            )
-          )
-        )
-      )
+              (base_type
+                (identifier))))))
       (block
         (call_expression
-          callee: (partial_application
+          (partial_application
             (identifier)
-            (identifier)
-          )
-          (literal (float))
-        )
-      )
-    )
-  )
-)
+            (identifier))
+          (float))))))
 
 ======
 MT
@@ -201,70 +185,59 @@ class MT is Random
     """
     _state = Array[U64](_n())
     _index = _n()
+
 ---
 
 (source_file
   (class_definition
     (identifier)
-    (base_type name: (identifier))
-    (string (string_content))
+    (base_type
+      (identifier))
+    (string
+      (string_content))
     (field
-      name: (identifier)
+      (identifier)
       (base_type
-        name: (identifier)
+        (identifier)
         (type_args
-          (base_type name: (identifier))
-        )
-      )
-    )
+          (base_type
+            (identifier)))))
     (field
-      name: (identifier)
-      (base_type name: (identifier))
-    )
+      (identifier)
+      (base_type
+        (identifier)))
     (constructor
       (identifier)
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-          (literal (number))
-        )
+          (identifier)
+          (base_type
+            (identifier))
+          (number))
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-          (literal (number))
-        )
-      )
+          (identifier)
+          (base_type
+            (identifier))
+          (number)))
       (block
-        (literal (string (string_content)))
+        (string
+          (string_content))
         (assignment_expression
           (identifier)
           (block
             (call_expression
-              callee: (generic_expression
+              (generic_expression
                 (identifier)
                 (type_args
-                  (base_type name: (identifier))
-                )
-              )
+                  (base_type
+                    (identifier))))
               (call_expression
-                callee: (identifier)
-              )
-            )
-          )
-        )
+                (identifier)))))
         (assignment_expression
           (identifier)
           (block
             (call_expression
-              callee: (identifier)
-            )
-          )
-        )
-      )
-    )
-  )
-)
+              (identifier))))))))
 
 =========
 Interface
@@ -278,33 +251,34 @@ interface Notify
     """
     docstring
     """
+
 ---
+
 (source_file
   (interface_definition
     (identifier)
-    (string (string_content))
+    (string
+      (string_content))
     (method
       (capability)
       (identifier)
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
+          (identifier)
+          (base_type
+            (identifier)))
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
+          (identifier)
+          (base_type
+            (identifier)))
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        ) 
-      )
-      returns: (base_type name: (identifier))
-      (string (string_content))
-    )
-  )
-)
+          (identifier)
+          (base_type
+            (identifier))))
+      (base_type
+        (identifier))
+      (string
+        (string_content)))))
 
 =========
 Annotated
@@ -313,10 +287,12 @@ Annotated
 actor \nodoc,test\ Main is TestList
 
 ---
+
 (source_file
   (actor_definition
-    (annotation (identifier) (identifier))
+    (annotation
+      (identifier)
+      (identifier))
     (identifier)
-    (base_type name: (identifier))
-  )
-)
+    (base_type
+      (identifier))))

@@ -6,13 +6,11 @@ Single Quoted String
 
 ---
 
-(source_file 
+(source_file
   (string
     (string_content)
     (escape_sequence)
-    (string_content)
-  )
-)
+    (string_content)))
 
 ===================
 Single empty String
@@ -25,8 +23,8 @@ use ""
 
 (source_file
   (string)
-  (use_statement (string))
-)
+  (use_statement
+    (string)))
 
 =======================
 Single Multiline String
@@ -39,9 +37,9 @@ use
 
 ---
 
-(source_file 
-  (string (string_content))
-)
+(source_file
+  (string
+    (string_content)))
 
 ===================
 Triple empty String
@@ -51,7 +49,8 @@ Triple empty String
 
 ---
 
-(source_file (string))
+(source_file
+      (string))
 
 =========================
 Triple multiline String
@@ -66,8 +65,8 @@ use "foo"
 ---
 
 (source_file
-  (string (string_content) (string_content) (string_content))
-)
+  (string
+    (string_content)))
 
 =========================
 Block Quote Triple String
@@ -80,7 +79,8 @@ Block Quote Triple String
 
 ---
 
-(source_file (comment))
+(source_file
+  (block_comment))
 
 ================================
 Block Quote before Triple String
@@ -93,7 +93,7 @@ hdfjdf
 
 ---
 
-(source_file 
-  (comment)
-  (string (string_content))
-)
+(source_file
+  (block_comment)
+  (string
+    (string_content)))

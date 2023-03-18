@@ -5,26 +5,26 @@ Use statement
 use "math"
 
 ---
+
 (source_file
   (use_statement
-    (string (string_content))
-  )
-)
+    (string
+      (string_content))))
 
 =======================
 Use statement with name
 =======================
 
-use 
+use
 foo = "foo"
 
 ---
 
-(source_file 
+(source_file
   (use_statement
     (identifier)
-    (string (string_content))
-  ))
+    (string
+      (string_content))))
 
 =======================
 Multiple Use statements
@@ -39,13 +39,15 @@ use "foo"
 
 (source_file
   (use_statement
-    (string (string_content)))
+    (string
+      (string_content)))
   (use_statement
     (identifier)
-    (string (string_content)))
+    (string
+      (string_content)))
   (use_statement
-    (string (string_content)))
-)
+    (string
+      (string_content))))
 
 ========
 Use FFI
@@ -59,21 +61,18 @@ use @println[U64](i: U64, u: U64, ...)?
   (use_statement
     (ffi_method
       (identifier)
-      returns: (base_type name: (identifier))
+      (base_type
+        (identifier))
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
+          (identifier)
+          (base_type
+            (identifier)))
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
-        (parameter)
-      )
-    )
-  )
-)
+          (identifier)
+          (base_type
+            (identifier)))
+        (parameter)))))
 
 ======
 Use if
@@ -85,19 +84,14 @@ use "package" if consume iso foo
 
 (source_file
   (use_statement
-    (string (string_content))
+    (string
+      (string_content))
     (platform_specifier
       (if_block
-        (block 
-          (consume_expression 
+        (block
+          (consume_expression
             (capability)
-            (identifier)
-          )
-        )
-      )
-    )
-  )
-)
+            (identifier)))))))
 
 ==================
 Use primitive type
@@ -111,42 +105,34 @@ use @primitve_types[Bool](a: U64, b: I128, c: Main ref, d: U8 iso^, e: I8 tag!)
   (use_statement
     (ffi_method
       (identifier)
-      returns: (base_type name: (identifier))
+      (base_type
+        (identifier))
       (parameters
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
+          (identifier)
+          (base_type
+            (identifier)))
         (parameter
-          name: (identifier)
-          (base_type name: (identifier))
-        )
+          (identifier)
+          (base_type
+            (identifier)))
         (parameter
-          name: (identifier)
+          (identifier)
           (ref_type
-            (base_type name: (identifier))
-          )
-        )
+            (base_type
+              (identifier))))
         (parameter
-          name: (identifier)
+          (identifier)
           (ephemeral_type
             (iso_type
-              (base_type name: (identifier))
-            )
-          )
-        )
+              (base_type
+                (identifier)))))
         (parameter
-          name: (identifier)
+          (identifier)
           (aliased_type
             (tag_type
-              (base_type name: (identifier))
-            )
-          )
-        )
-      )
-    )
-  )
-)
+              (base_type
+                (identifier)))))))))
 
 ==============
 Use Union type
@@ -160,14 +146,12 @@ use @union_type[(U8 | I8)]()
   (use_statement
     (ffi_method
       (identifier)
-      returns: (union_type
-        (base_type name: (identifier))
-        (base_type name: (identifier))
-      )
-      (parameters)
-    )
-  )
-)
+      (union_type
+        (base_type
+          (identifier))
+        (base_type
+          (identifier)))
+      (parameters))))
 
 =====================
 Use Intersection type
@@ -181,14 +165,12 @@ use @union_type[(U8 & I8)]()
   (use_statement
     (ffi_method
       (identifier)
-      returns: (intersection_type
-        (base_type name: (identifier))
-        (base_type name: (identifier))
-      )
-      (parameters)
-    )
-  )
-)
+      (intersection_type
+        (base_type
+          (identifier))
+        (base_type
+          (identifier)))
+      (parameters))))
 
 ==============
 Use tuple type
@@ -202,17 +184,15 @@ use @tuple_type[(Foo, (Bar | Baz))]()
   (use_statement
     (ffi_method
       (identifier)
-      returns: (tuple_type
-        (base_type name: (identifier))
+      (tuple_type
+        (base_type
+          (identifier))
         (union_type
-          (base_type name: (identifier))
-          (base_type name: (identifier))
-        )
-      )
-      (parameters)
-    )
-  )
-)
+          (base_type
+            (identifier))
+          (base_type
+            (identifier))))
+      (parameters))))
 
 ================
 Use grouped type
@@ -222,41 +202,33 @@ use @grouped[(Foo)]()
 
 ---
 
-(source_file 
+(source_file
   (use_statement
     (ffi_method
       (identifier)
-      returns: (tuple_type
-        (base_type name: (identifier))
-      )
-      (parameters)
-    )
-  )
-)
+      (tuple_type
+        (base_type
+          (identifier)))
+      (parameters))))
 
 ==================
 Use ephemeral type
 ==================
 
 use @snot[Iterator[this->A]^]()
+
 ---
-(source_file 
+
+(source_file
   (use_statement
     (ffi_method
       (identifier)
-      returns: (ephemeral_type
+      (ephemeral_type
         (base_type
-          name: (identifier)
+          (identifier)
           (type_args
             (viewpoint_type
               (this)
-              (base_type name: (identifier))
-            )
-          )
-        )
-      )
-      (parameters)
-    )
-  )
-)
-
+              (base_type
+                (identifier))))))
+      (parameters))))
