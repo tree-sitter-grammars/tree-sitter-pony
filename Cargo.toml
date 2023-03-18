@@ -2,7 +2,10 @@
 name = "tree-sitter-pony"
 description = "Pony grammar for tree-sitter"
 version = "0.0.1"
-authors = ["Amaan Qureshi <amaanq12@gmail.com>"]
+authors = [
+	"Amaan Qureshi <amaanq12@gmail.com>",
+	"Matthias Wahl <matthiaswahl@m7w3.de>",
+]
 license = "MIT"
 readme = "bindings/rust/README.md"
 keywords = ["incremental", "parsing", "pony"]

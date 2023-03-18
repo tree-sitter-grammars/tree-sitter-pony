@@ -9,6 +9,9 @@
     "pony"
   ],
   "author": "Amaan Qureshi <amaanq12@gmail.com>",
+  "contributors": [
+    "Matthias Wahl <matthiaswahl@m7w3.de>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/amaanq/tree-sitter-pony/issues"
