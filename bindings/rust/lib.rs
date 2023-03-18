@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------------------
-// Copyright © 2023 Amaan Qureshi <amaanq12@gmail.com>
+// Copyright © 2023 Amaan Qureshi <amaanq12@gmail.com>, Matthias Wahl <matthiaswahl@m7w3.de>
 // See the LICENSE file in this repo for license details.
 // ------------------------------------------------------------------------------------------------
 
