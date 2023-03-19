@@ -32,6 +32,7 @@ module.exports = grammar({
   externals: $ => [
     $._type_args_start,
     $.block_comment,
+    $._multiline_string_content,
   ],
 
   extras: $ => [
@@ -686,7 +687,7 @@ module.exports = grammar({
     },
 
     float: _ => {
-      // stupidly this results in ~200 less states
+      // Stupidly this results in ~200 less states
       // vs a prettier alternative
       const decimal = /[0-9][0-9_]*/;
       const dot_decimal = /[0-9][0-9_]*\.[0-9][0-9_]*/;
@@ -710,21 +711,16 @@ module.exports = grammar({
     ),
     _multiline_string_literal: $ => prec.right(seq(
       '"""',
-      repeat(choice(
-        alias($._multiline_string_content, $.string_content),
-        $._escape_sequence,
-      )),
+      repeat(alias($._multiline_string_content, $.string_content)),
       '"""',
     )),
 
     character: $ => seq(
       '\'',
-      repeat1(
-        choice(
-          $.character_content,
-          $._escape_sequence,
-        ),
-      ),
+      repeat1(choice(
+        $.character_content,
+        $._escape_sequence,
+      )),
       '\'',
     ),
     character_content: _ => token.immediate(prec(2, /[^'\\]+/)),
@@ -734,13 +730,6 @@ module.exports = grammar({
     // so as to obtain a node in the CST.
     //
     string_content: _ => token.immediate(prec(1, /[^"\\]+/)),
-    _multiline_string_content: $ => prec.right(choice(
-      /[^"]+/,
-      seq(/"[^"]*/, repeat(/[^"]+/)),
-      // To account for content that ends in a quote immediately followed by the triple quote
-      // e.g. """"Foo"""" will be parsed as """, content: "Foo", """
-      $._string_literal,
-    )),
 
     _escape_sequence: $ => choice(
       prec(2, token.immediate(seq('\\', /[^abfnrtvxu'\"\\\?]/))),
