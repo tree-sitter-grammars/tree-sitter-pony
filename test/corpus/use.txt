@@ -89,7 +89,7 @@ use "package" if consume iso foo
     (platform_specifier
       (if_block
         (block
-          (consume_expression
+          (consume_statement
             (capability)
             (identifier)))))))
 
