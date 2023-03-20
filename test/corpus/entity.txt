@@ -73,7 +73,7 @@ actor Main
       (block
         (string
           (string_content))
-        (consume_expression
+        (consume_statement
           (identifier))))
     (behavior
       (identifier)
