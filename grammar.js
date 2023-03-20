@@ -174,6 +174,7 @@ module.exports = grammar({
       optional($.capability),
       $.identifier,
       optional($.generic_parameters),
+      optional(seq('is', $.type)),
       optional($.string),
       repeat($.field),
       repeat(choice(
