@@ -335,7 +335,7 @@ module.exports = grammar({
 
     block: $ => prec.left(seq($.expression, repeat(seq(optional(';'), $.expression)))),
 
-    expression: $ => (choice(
+    expression: $ => choice(
       $.unary_expression,
       $.binary_expression,
       $.assignment_expression,
@@ -352,12 +352,12 @@ module.exports = grammar({
       $.try_statement,
       $.with_statement,
       $.repeat_statement,
-      $.recover_expression,
-      $.match_expression,
+      $.recover_statement,
+      $.match_statement,
       $.return_statement,
       $.continue_statement,
       $.break_statement,
-      $.consume_expression,
+      $.consume_statement,
       $.member_expression,
       $.parenthesized_expression,
       $.tuple_expression,
@@ -369,7 +369,7 @@ module.exports = grammar({
       $.error,
       $.compile_intrinsic,
       $.compile_error,
-    )),
+    ),
 
     error: _ => 'error',
     compile_intrinsic: _ => 'compile_intrinsic',
@@ -602,7 +602,7 @@ module.exports = grammar({
       'end',
     ),
 
-    recover_expression: $ => seq(
+    recover_statement: $ => seq(
       'recover',
       optional($.annotation),
       optional($.capability),
@@ -610,7 +610,7 @@ module.exports = grammar({
       'end',
     ),
 
-    match_expression: $ => seq(
+    match_statement: $ => seq(
       'match',
       optional($.annotation),
       $.block,
@@ -639,7 +639,7 @@ module.exports = grammar({
 
     break_statement: $ => prec.left(seq('break', optional($.block))),
 
-    consume_expression: $ => seq('consume', optional($.capability), $.identifier),
+    consume_statement: $ => seq('consume', optional($.capability), $.identifier),
 
     generic_parameter: $ => seq(
       $.identifier,
