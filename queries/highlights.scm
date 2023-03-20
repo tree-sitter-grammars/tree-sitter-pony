@@ -72,7 +72,7 @@
 
 (iftype_statement "end" @conditional)
 
-(match_expression "end" @conditional)
+(match_statement "end" @conditional)
 
 ; Repeats
 
@@ -99,7 +99,7 @@
 
 (try_statement "end" @exception)
 
-(recover_expression "end" @exception)
+(recover_statement "end" @exception)
 
 ; Attributes
 
@@ -146,6 +146,8 @@
 (lambda_parameter name: (identifier) @parameter)
 
 ; Types
+
+(type_alias (identifier) @type.definition)
 
 (base_type name: (identifier) @type)
 
