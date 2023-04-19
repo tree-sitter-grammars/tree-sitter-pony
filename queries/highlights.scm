@@ -110,6 +110,7 @@
 (identifier) @variable
 
 (this) @variable.builtin
+(location) @preproc
 
 ; Fields
 

@@ -369,11 +369,13 @@ module.exports = grammar({
       $.error,
       $.compile_intrinsic,
       $.compile_error,
+      $.location,
     ),
 
     error: _ => 'error',
     compile_intrinsic: _ => 'compile_intrinsic',
     compile_error: $ => prec.left(seq('compile_error', optional($.string))),
+    location: _ => '__loc',
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
       field('operator', choice('-', 'not', '-~', 'addressof', 'digestof')),

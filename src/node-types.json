@@ -80,6 +80,10 @@
         "named": true
       },
       {
+        "type": "location",
+        "named": true
+      },
+      {
         "type": "match_statement",
         "named": true
       },
@@ -2903,6 +2907,10 @@
   },
   {
     "type": "line_comment",
+    "named": true
+  },
+  {
+    "type": "location",
     "named": true
   },
   {
