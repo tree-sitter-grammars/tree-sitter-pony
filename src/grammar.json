@@ -2366,6 +2366,10 @@
         {
           "type": "SYMBOL",
           "name": "compile_error"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "location"
         }
       ]
     },
@@ -2401,6 +2405,10 @@
           }
         ]
       }
+    },
+    "location": {
+      "type": "STRING",
+      "value": "__loc"
     },
     "unary_expression": {
       "type": "PREC_LEFT",
