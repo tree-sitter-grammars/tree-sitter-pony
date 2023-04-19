@@ -159,16 +159,19 @@ primitive Foo
                 (base_type
                   (identifier))))
             (identifier))
-          (chain_expression
-            (array_literal
-              (block
-                (this)))
-            (call_expression
-              (member_expression
-                (call_expression
-                  (identifier)
+          (arguments
+            (chain_expression
+              (array_literal
+                (block
+                  (this)))
+              (call_expression
+                (member_expression
+                  (call_expression
+                    (identifier)
+                    (arguments (identifier))
+                  )
                   (identifier))
-                (identifier)))))))))
+                (arguments)))))))))
 
 ===================
 Block with ffi call
@@ -193,14 +196,16 @@ primitive Foo
             (identifier))
           (block
             (call_expression
-              (member_expression
-                (identifier)
-                (identifier)))))
+              (member_expression 
+                (identifier) 
+                (identifier))
+              (arguments))))
         (call_expression
           (ffi_identifier
             (identifier))
-          (string
-            (string_content)))))))
+          (arguments
+            (string
+              (string_content))))))))
 
 
 ============================================

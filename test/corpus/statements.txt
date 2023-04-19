@@ -25,12 +25,14 @@ primitive ContainsWith
             (identifier)
             (block
               (call_expression
-                (identifier))))
+                (identifier)
+                (arguments))))
           (with_elem
             (identifier)
             (block
               (call_expression
-                (identifier))))
+                (identifier)
+                (arguments))))
           (do_block
             (line_comment)
             (block
@@ -38,7 +40,8 @@ primitive ContainsWith
                 (member_expression
                   (identifier)
                   (identifier))
-                (identifier)))
+                (arguments
+                  (identifier))))
             (else_block
               (block
                 (identifier)))))))))
@@ -161,6 +164,7 @@ primitive Snot
               (array_literal)
               (identifier)
             )
+            (arguments)
           )
           (do_block
             (block
@@ -217,7 +221,8 @@ primitive Foo
             (call_expression
               (member_expression
                 (identifier)
-                (identifier)))
+                (identifier))
+              (arguments))
             (error))
           (else_block
             (block
