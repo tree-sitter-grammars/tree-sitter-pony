@@ -435,12 +435,15 @@ module.exports = grammar({
 
     call_expression: $ => prec(PREC.CALL, seq(
       field('callee', $.expression),
-      token.immediate('('),
-      commaSep($.expression),
-      optional($.named_arguments),
-      ')',
+      $.arguments,
       optional('?'),
     )),
+    arguments: $ => seq(
+      token.immediate('('),
+      field('positional', commaSep($.expression)),
+      optional($.named_arguments),
+      ')',
+    ),
 
     chain_expression: $ => prec.right(PREC.CALL, seq(
       $.expression,

@@ -132,10 +132,11 @@ actor Main
               (identifier)
               (identifier))
             (identifier))
-          (binary_expression
-            (string
-              (string_content))
-            (number)))))
+          (arguments
+            (binary_expression
+              (string
+                (string_content))
+              (number))))))
     (method
       (capability)
       (identifier)
@@ -164,7 +165,8 @@ actor Main
           (partial_application
             (identifier)
             (identifier))
-          (float))))))
+          (arguments
+            (float)))))))
 
 ======
 MT
@@ -231,13 +233,16 @@ class MT is Random
                 (type_args
                   (base_type
                     (identifier))))
-              (call_expression
-                (identifier)))))
+              (arguments
+                (call_expression
+                  (identifier)
+                  (arguments))))))
         (assignment_expression
           (identifier)
           (block
             (call_expression
-              (identifier))))))))
+              (identifier)
+              (arguments))))))))
 
 =========
 Interface

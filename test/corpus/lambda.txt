@@ -42,11 +42,12 @@ primitive Lambda
               (type_args
                 (base_type
                   (identifier)))))
-          (generic_expression
-            (identifier)
-            (type_args
-              (base_type
-                (identifier)))))))))
+          (arguments
+            (generic_expression
+              (identifier)
+              (type_args
+                (base_type
+                  (identifier))))))))))
 
 ======
 Lambda
@@ -75,7 +76,8 @@ class Lambda
           (call_expression
             (member_expression
               (identifier)
-              (identifier))))))))
+              (identifier))
+            (arguments)))))))
 
 ========
 No Args
@@ -175,8 +177,10 @@ primitive ObjectLiteral
                         (chain_expression
                           (identifier)
                           (call_expression
-                            (identifier))))
-                      (identifier)))))
+                            (identifier)
+                            (arguments))))
+                      (identifier))
+                    (arguments))))
               (behavior
                 (identifier)
                 (generic_parameters
@@ -199,7 +203,8 @@ primitive ObjectLiteral
                   (call_expression
                     (member_expression
                       (identifier)
-                      (identifier))))))))))))
+                      (identifier))
+                    (arguments)))))))))))
 
 ===========
 Bare Lambda
@@ -247,7 +252,8 @@ actor Main
             (call_expression
               (ffi_identifier
                 (identifier))
-              (number))))
+              (arguments
+                (number)))))
         (assignment_expression
           (variable_declaration
             (identifier)
@@ -273,16 +279,19 @@ actor Main
                         (identifier)))
                     (base_type
                       (identifier)))))
-              (number))))
+              (arguments
+                (number)))))
         (assignment_expression
           (variable_declaration
             (identifier))
           (block
             (call_expression
               (identifier)
-              (call_expression
-                (identifier)
-                (number))
-              (call_expression
-                (identifier)
-                (number)))))))))
+              (arguments
+                (call_expression
+                  (identifier)
+                  (arguments
+                    (number)))
+                (call_expression
+                  (identifier)
+                  (arguments (number)))))))))))
