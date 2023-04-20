@@ -22,24 +22,25 @@ actor Main
         (identifier))))
   (actor_definition
     (identifier)
-    (constructor
-      (identifier)
-      (parameters
-        (parameter
-          (identifier)
-          (base_type
-            (identifier))))
-      (block
+    (members
+      (constructor
         (identifier)
-        (array_literal
-          (block
-            (identifier)))))
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (generic_expression
-          (identifier)
-          (type_args
+        (parameters
+          (parameter
+            (identifier)
             (base_type
-              (identifier))))))))
+              (identifier))))
+        (block
+          (identifier)
+          (array_literal
+            (block
+              (identifier)))))
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (generic_expression
+            (identifier)
+            (type_args
+              (base_type
+                (identifier)))))))))

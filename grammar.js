@@ -94,6 +94,27 @@ module.exports = grammar({
       optional($.string),
     ),
 
+    members: $ => choice(
+      repeat1($.field),
+      repeat1(
+        choice(
+          $.constructor,
+          $.method,
+          $.behavior,
+        ),
+      ),
+      seq(
+        repeat1($.field),
+        repeat1(
+          choice(
+            $.constructor,
+            $.method,
+            $.behavior,
+          ),
+        ),
+      ),
+    ),
+
     actor_definition: $ => seq(
       'actor',
       optional($.annotation),
@@ -101,12 +122,7 @@ module.exports = grammar({
       optional($.generic_parameters),
       optional(seq('is', $.type)),
       optional($.string),
-      repeat($.field),
-      repeat(choice(
-        $.constructor,
-        $.method,
-        $.behavior,
-      )),
+      optional($.members),
     ),
 
     class_definition: $ => seq(
@@ -117,12 +133,7 @@ module.exports = grammar({
       optional($.generic_parameters),
       optional(seq('is', $.type)),
       optional($.string),
-      repeat($.field),
-      repeat(choice(
-        $.constructor,
-        $.method,
-        $.behavior,
-      )),
+      optional($.members),
     ),
 
     primitive_definition: $ => seq(
@@ -132,10 +143,7 @@ module.exports = grammar({
       optional($.generic_parameters),
       optional(seq('is', $.type)),
       optional($.string),
-      repeat(choice(
-        $.constructor,
-        $.method,
-      )),
+      optional($.members),
     ),
 
     interface_definition: $ => seq(
@@ -146,11 +154,7 @@ module.exports = grammar({
       optional($.generic_parameters),
       optional(seq('is', $.type)),
       optional($.string),
-      repeat(choice(
-        $.constructor,
-        $.method,
-        $.behavior,
-      )),
+      optional($.members),
     ),
 
     trait_definition: $ => seq(
@@ -161,11 +165,7 @@ module.exports = grammar({
       optional($.generic_parameters),
       optional(seq('is', $.type)),
       optional($.string),
-      repeat(choice(
-        $.constructor,
-        $.method,
-        $.behavior,
-      )),
+      optional($.members),
     ),
 
     struct_definition: $ => seq(
@@ -176,11 +176,7 @@ module.exports = grammar({
       optional($.generic_parameters),
       optional(seq('is', $.type)),
       optional($.string),
-      repeat($.field),
-      repeat(choice(
-        $.constructor,
-        $.method,
-      )),
+      optional($.members),
     ),
 
     field: $ => seq(
@@ -453,8 +449,9 @@ module.exports = grammar({
 
     named_arguments: $ => seq(
       'where',
-      commaSep(seq($.identifier, '=', $.expression)),
+      commaSep($.named_argument),
     ),
+    named_argument: $ => seq($.identifier, '=', $.expression),
 
     lambda_expression: $ => seq(
       optional('@'),
@@ -675,8 +672,7 @@ module.exports = grammar({
       'object',
       optional($.capability),
       optional(seq('is', $.type)),
-      repeat($.field),
-      repeat(choice($.method, $.behavior)),
+      optional($.members),
       'end',
     ),
 

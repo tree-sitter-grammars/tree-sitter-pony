@@ -16,35 +16,36 @@ primitive ContainsWith
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (with_statement
-          (with_elem
-            (identifier)
-            (block
-              (call_expression
-                (identifier)
-                (arguments))))
-          (with_elem
-            (identifier)
-            (block
-              (call_expression
-                (identifier)
-                (arguments))))
-          (do_block
-            (line_comment)
-            (block
-              (call_expression
-                (member_expression
-                  (identifier)
-                  (identifier))
-                (arguments
-                  (identifier))))
-            (else_block
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (with_statement
+            (with_elem
+              (identifier)
               (block
-                (identifier)))))))))
+                (call_expression
+                  (identifier)
+                  (arguments))))
+            (with_elem
+              (identifier)
+              (block
+                (call_expression
+                  (identifier)
+                  (arguments))))
+            (do_block
+              (line_comment)
+              (block
+                (call_expression
+                  (member_expression
+                    (identifier)
+                    (identifier))
+                  (arguments
+                    (identifier))))
+              (else_block
+                (block
+                  (identifier))))))))))
 
 ========
 If Block
@@ -63,20 +64,21 @@ primitive Foo
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (if_statement
-          (if_block
-            (block
-              (string
-                (string_content))
-              (boolean)))
-          (then_block
-            (block
-              (string
-                (string_content)))))))))
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (if_statement
+            (if_block
+              (block
+                (string
+                  (string_content))
+                (boolean)))
+            (then_block
+              (block
+                (string
+                  (string_content))))))))))
 
 ======
 Iftype
@@ -100,20 +102,12 @@ primitive Foo[A]
     (generic_parameters
       (generic_parameter
         (identifier)))
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (iftype_statement
-          (base_type
-            (identifier))
-          (base_type
-            (identifier))
-          (then_block
-            (block
-              (string
-                (string_content))))
-          (elseiftype_block
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (iftype_statement
             (base_type
               (identifier))
             (base_type
@@ -121,11 +115,20 @@ primitive Foo[A]
             (then_block
               (block
                 (string
-                  (string_content)))))
-          (else_block
-            (block
-              (string
-                (string_content)))))))))
+                  (string_content))))
+            (elseiftype_block
+              (base_type
+                (identifier))
+              (base_type
+                (identifier))
+              (then_block
+                (block
+                  (string
+                    (string_content)))))
+            (else_block
+              (block
+                (string
+                  (string_content))))))))))
 
 ========
 For Loop
@@ -153,44 +156,45 @@ primitive Snot
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (for_statement
-          (identifier)
-          (call_expression
-            (member_expression
-              (array_literal)
-              (identifier)
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (for_statement
+            (identifier)
+            (call_expression
+              (member_expression
+                (array_literal)
+                (identifier)
+              )
+              (arguments)
             )
-            (arguments)
-          )
-          (do_block
-            (block
-              (while_statement
-                (boolean)
-                (do_block
-                  (block
-                    (repeat_statement
-                      (block
-                        (identifier))
-                      (binary_expression
-                        (identifier)
-                        (boolean))
-                      (else_block
-                        (block
-                          (string
-                            (string_content))))
-                      (line_comment)))
-                  (else_block
-                    (block
-                      (string
-                        (string_content)))))))
-            (else_block
+            (do_block
               (block
-                (string
-                  (string_content))))))))))
+                (while_statement
+                  (boolean)
+                  (do_block
+                    (block
+                      (repeat_statement
+                        (block
+                          (identifier))
+                        (binary_expression
+                          (identifier)
+                          (boolean))
+                        (else_block
+                          (block
+                            (string
+                              (string_content))))
+                        (line_comment)))
+                    (else_block
+                      (block
+                        (string
+                          (string_content)))))))
+              (else_block
+                (block
+                  (string
+                    (string_content)))))))))))
 
 =============
 Try Statement
@@ -212,23 +216,24 @@ primitive Foo
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (try_statement
-          (block
-            (call_expression
-              (member_expression
-                (identifier)
-                (identifier))
-              (arguments))
-            (error))
-          (else_block
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (try_statement
             (block
-              (string
-                (string_content))))
-          (then_block
-            (block
-              (string
-                (string_content)))))))))
+              (call_expression
+                (member_expression
+                  (identifier)
+                  (identifier))
+                (arguments))
+              (error))
+            (else_block
+              (block
+                (string
+                  (string_content))))
+            (then_block
+              (block
+                (string
+                  (string_content))))))))))
