@@ -11,43 +11,44 @@ primitive Lambda
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters
-        (parameter
-          (identifier)
-          (iso_type
-            (lambda_type
-              (capability)
-              (identifier)
-              (type_parameters
-                (generic_parameter
-                  (identifier)))
-              (lambda_parameters
-                (base_type
-                  (identifier)
-                  (type_args
-                    (base_type
-                      (identifier)))))
-              (base_type
-                (identifier))))))
-      (base_type
-        (identifier))
-      (block
-        (call_expression
-          (member_expression
+    (members
+      (method
+        (identifier)
+        (parameters
+          (parameter
             (identifier)
-            (generic_expression
-              (identifier)
-              (type_args
+            (iso_type
+              (lambda_type
+                (capability)
+                (identifier)
+                (type_parameters
+                  (generic_parameter
+                    (identifier)))
+                (lambda_parameters
+                  (base_type
+                    (identifier)
+                    (type_args
+                      (base_type
+                        (identifier)))))
                 (base_type
-                  (identifier)))))
-          (arguments
-            (generic_expression
+                  (identifier))))))
+        (base_type
+          (identifier))
+        (block
+          (call_expression
+            (member_expression
               (identifier)
-              (type_args
-                (base_type
-                  (identifier))))))))))
+              (generic_expression
+                (identifier)
+                (type_args
+                  (base_type
+                    (identifier)))))
+            (arguments
+              (generic_expression
+                (identifier)
+                (type_args
+                  (base_type
+                    (identifier)))))))))))
 
 ======
 Lambda
@@ -61,23 +62,24 @@ class Lambda
 (source_file
   (class_definition
     (identifier)
-    (field
-      (identifier)
-      (lambda_type
-        (lambda_parameters
+    (members
+      (field
+        (identifier)
+        (lambda_type
+          (lambda_parameters
+            (base_type
+              (identifier)))
           (base_type
             (identifier)))
-        (base_type
-          (identifier)))
-      (lambda_expression
-        (lambda_parameter
-          (identifier))
-        (block
-          (call_expression
-            (member_expression
-              (identifier)
-              (identifier))
-            (arguments)))))))
+        (lambda_expression
+          (lambda_parameter
+            (identifier))
+          (block
+            (call_expression
+              (member_expression
+                (identifier)
+                (identifier))
+              (arguments))))))))
 
 ========
 No Args
@@ -91,15 +93,16 @@ class Lambda
 (source_file
   (class_definition
     (identifier)
-    (field
-      (identifier)
-      (lambda_type
-        (capability)
-        (lambda_parameters))
-      (lambda_expression
-        (block
-          (identifier))
-        (capability)))))
+    (members
+      (field
+        (identifier)
+        (lambda_type
+          (capability)
+          (lambda_parameters))
+        (lambda_expression
+          (block
+            (identifier))
+          (capability))))))
 
 ===============
 Lambda Captures
@@ -115,28 +118,29 @@ class Captures
 (source_file
   (class_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (assignment_expression
-          (variable_declaration
-            (identifier))
-          (block
-            (boolean)))
-        (assignment_expression
-          (variable_declaration
-            (identifier))
-          (block
-            (lambda_expression
-              (lambda_captures
-                (identifier)
-                (base_type
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (assignment_expression
+            (variable_declaration
+              (identifier))
+            (block
+              (boolean)))
+          (assignment_expression
+            (variable_declaration
+              (identifier))
+            (block
+              (lambda_expression
+                (lambda_captures
+                  (identifier)
+                  (base_type
+                    (identifier))
                   (identifier))
-                (identifier))
-              (block
-                (unary_expression
-                  (identifier))))))))))
+                (block
+                  (unary_expression
+                    (identifier)))))))))))
 
 ==============
 Object Literal
@@ -156,55 +160,57 @@ primitive ObjectLiteral
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (assignment_expression
-          (variable_declaration
-            (identifier))
-          (block
-            (object_literal
-              (method
-                (identifier)
-                (parameters)
-                (base_type
-                  (identifier))
-                (block
-                  (call_expression
-                    (member_expression
-                      (parenthesized_expression
-                        (chain_expression
-                          (identifier)
-                          (call_expression
-                            (identifier)
-                            (arguments))))
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (assignment_expression
+            (variable_declaration
+              (identifier))
+            (block
+              (object_literal
+                (members
+                  (method
+                    (identifier)
+                    (parameters)
+                    (base_type
                       (identifier))
-                    (arguments))))
-              (behavior
-                (identifier)
-                (generic_parameters
-                  (generic_parameter
+                    (block
+                      (call_expression
+                        (member_expression
+                          (parenthesized_expression
+                            (chain_expression
+                              (identifier)
+                              (call_expression
+                                (identifier)
+                                (arguments))))
+                          (identifier))
+                        (arguments))))
+                  (behavior
                     (identifier)
-                    (read_type
-                      (base_type
-                        (identifier)))))
-                (parameters
-                  (parameter
-                    (identifier)
-                    (ephemeral_type
-                      (iso_type
-                        (base_type
-                          (identifier)
-                          (type_args
+                    (generic_parameters
+                      (generic_parameter
+                        (identifier)
+                        (read_type
+                          (base_type
+                            (identifier)))))
+                    (parameters
+                      (parameter
+                        (identifier)
+                        (ephemeral_type
+                          (iso_type
                             (base_type
-                              (identifier))))))))
-                (block
-                  (call_expression
-                    (member_expression
-                      (identifier)
-                      (identifier))
-                    (arguments)))))))))))
+                              (identifier)
+                              (type_args
+                                (base_type
+                                  (identifier))))))))
+                    (block
+                      (call_expression
+                        (member_expression
+                          (identifier)
+                          (identifier))
+                        (arguments)))))))))))))
 
 ===========
 Bare Lambda
@@ -237,61 +243,62 @@ actor Main
             (identifier))))))
   (actor_definition
     (identifier)
-    (constructor
-      (identifier)
-      (parameters
-        (parameter
-          (identifier)
-          (base_type
-            (identifier))))
-      (block
-        (assignment_expression
-          (variable_declaration
-            (identifier))
-          (block
-            (call_expression
-              (ffi_identifier
-                (identifier))
-              (arguments
-                (number)))))
-        (assignment_expression
-          (variable_declaration
+    (members
+      (constructor
+        (identifier)
+        (parameters
+          (parameter
             (identifier)
-            (lambda_type
-              (lambda_parameters
-                (base_type
-                  (identifier))
-                (base_type
-                  (identifier)))
-              (base_type
-                (identifier))))
-          (block
-            (call_expression
-              (generic_expression
+            (base_type
+              (identifier))))
+        (block
+          (assignment_expression
+            (variable_declaration
+              (identifier))
+            (block
+              (call_expression
                 (ffi_identifier
                   (identifier))
-                (type_args
-                  (lambda_type
-                    (lambda_parameters
-                      (base_type
-                        (identifier))
-                      (base_type
-                        (identifier)))
-                    (base_type
-                      (identifier)))))
-              (arguments
-                (number)))))
-        (assignment_expression
-          (variable_declaration
-            (identifier))
-          (block
-            (call_expression
+                (arguments
+                  (number)))))
+          (assignment_expression
+            (variable_declaration
               (identifier)
-              (arguments
-                (call_expression
-                  (identifier)
-                  (arguments
-                    (number)))
-                (call_expression
-                  (identifier)
-                  (arguments (number)))))))))))
+              (lambda_type
+                (lambda_parameters
+                  (base_type
+                    (identifier))
+                  (base_type
+                    (identifier)))
+                (base_type
+                  (identifier))))
+            (block
+              (call_expression
+                (generic_expression
+                  (ffi_identifier
+                    (identifier))
+                  (type_args
+                    (lambda_type
+                      (lambda_parameters
+                        (base_type
+                          (identifier))
+                        (base_type
+                          (identifier)))
+                      (base_type
+                        (identifier)))))
+                (arguments
+                  (number)))))
+          (assignment_expression
+            (variable_declaration
+              (identifier))
+            (block
+              (call_expression
+                (identifier)
+                (arguments
+                  (call_expression
+                    (identifier)
+                    (arguments
+                      (number)))
+                  (call_expression
+                    (identifier)
+                    (arguments (number))))))))))))

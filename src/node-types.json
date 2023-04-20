@@ -312,18 +312,6 @@
           "named": true
         },
         {
-          "type": "behavior",
-          "named": true
-        },
-        {
-          "type": "constructor",
-          "named": true
-        },
-        {
-          "type": "field",
-          "named": true
-        },
-        {
           "type": "generic_parameters",
           "named": true
         },
@@ -332,7 +320,7 @@
           "named": true
         },
         {
-          "type": "method",
+          "type": "members",
           "named": true
         },
         {
@@ -917,19 +905,7 @@
           "named": true
         },
         {
-          "type": "behavior",
-          "named": true
-        },
-        {
           "type": "capability",
-          "named": true
-        },
-        {
-          "type": "constructor",
-          "named": true
-        },
-        {
-          "type": "field",
           "named": true
         },
         {
@@ -941,7 +917,7 @@
           "named": true
         },
         {
-          "type": "method",
+          "type": "members",
           "named": true
         },
         {
@@ -1425,15 +1401,7 @@
           "named": true
         },
         {
-          "type": "behavior",
-          "named": true
-        },
-        {
           "type": "capability",
-          "named": true
-        },
-        {
-          "type": "constructor",
           "named": true
         },
         {
@@ -1445,7 +1413,7 @@
           "named": true
         },
         {
-          "type": "method",
+          "type": "members",
           "named": true
         },
         {
@@ -1669,6 +1637,33 @@
     }
   },
   {
+    "type": "members",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "behavior",
+          "named": true
+        },
+        {
+          "type": "constructor",
+          "named": true
+        },
+        {
+          "type": "field",
+          "named": true
+        },
+        {
+          "type": "method",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "method",
     "named": true,
     "fields": {
@@ -1719,6 +1714,21 @@
     }
   },
   {
+    "type": "named_argument",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "named_arguments",
     "named": true,
     "fields": {},
@@ -1727,7 +1737,7 @@
       "required": false,
       "types": [
         {
-          "type": "expression",
+          "type": "named_argument",
           "named": true
         }
       ]
@@ -1742,19 +1752,11 @@
       "required": false,
       "types": [
         {
-          "type": "behavior",
-          "named": true
-        },
-        {
           "type": "capability",
           "named": true
         },
         {
-          "type": "field",
-          "named": true
-        },
-        {
-          "type": "method",
+          "type": "members",
           "named": true
         },
         {
@@ -1867,10 +1869,6 @@
           "named": true
         },
         {
-          "type": "constructor",
-          "named": true
-        },
-        {
           "type": "generic_parameters",
           "named": true
         },
@@ -1879,7 +1877,7 @@
           "named": true
         },
         {
-          "type": "method",
+          "type": "members",
           "named": true
         },
         {
@@ -2089,14 +2087,6 @@
           "named": true
         },
         {
-          "type": "constructor",
-          "named": true
-        },
-        {
-          "type": "field",
-          "named": true
-        },
-        {
           "type": "generic_parameters",
           "named": true
         },
@@ -2105,7 +2095,7 @@
           "named": true
         },
         {
-          "type": "method",
+          "type": "members",
           "named": true
         },
         {
@@ -2170,15 +2160,7 @@
           "named": true
         },
         {
-          "type": "behavior",
-          "named": true
-        },
-        {
           "type": "capability",
-          "named": true
-        },
-        {
-          "type": "constructor",
           "named": true
         },
         {
@@ -2190,7 +2172,7 @@
           "named": true
         },
         {
-          "type": "method",
+          "type": "members",
           "named": true
         },
         {

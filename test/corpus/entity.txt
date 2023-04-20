@@ -37,59 +37,60 @@ actor Main
     (identifier)
     (string
       (string_content))
-    (field
-      (identifier)
-      (base_type
-        (identifier))
-      (string
-        (string_content)))
-    (field
-      (identifier)
-      (ref_type
-        (base_type
-          (identifier)))
-      (string
-        (string_content))
-      (string
-        (string_content)))
-    (field
-      (identifier)
-      (intersection_type
+    (members
+      (field
+        (identifier)
         (base_type
           (identifier))
-        (base_type
-          (identifier)
-          (type_args
-            (base_type
-              (identifier))))))
-    (constructor
-      (capability)
-      (identifier)
-      (parameters
-        (parameter
-          (identifier)
+        (string
+          (string_content)))
+      (field
+        (identifier)
+        (ref_type
           (base_type
-            (identifier))))
-      (block
+            (identifier)))
         (string
           (string_content))
-        (consume_statement
-          (identifier))))
-    (behavior
-      (identifier)
-      (generic_parameters
-        (generic_parameter
-          (identifier)
-          (base_type
-            (identifier))))
-      (parameters
-        (parameter
-          (identifier)
-          (base_type
-            (identifier))))
-      (block
         (string
-          (string_content))))))
+          (string_content)))
+      (field
+        (identifier)
+        (intersection_type
+          (base_type
+            (identifier))
+          (base_type
+            (identifier)
+            (type_args
+              (base_type
+                (identifier))))))
+      (constructor
+        (capability)
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (base_type
+              (identifier))))
+        (block
+          (string
+            (string_content))
+          (consume_statement
+            (identifier))))
+      (behavior
+        (identifier)
+        (generic_parameters
+          (generic_parameter
+            (identifier)
+            (base_type
+              (identifier))))
+        (parameters
+          (parameter
+            (identifier)
+            (base_type
+              (identifier))))
+        (block
+          (string
+            (string_content)))))))
 
 =============
 Method Quirks
@@ -118,55 +119,56 @@ actor Main
           (identifier)))))
   (actor_definition
     (identifier)
-    (constructor
-      (identifier)
-      (parameters
-        (parameter
-          (identifier)
-          (base_type
-            (identifier))))
-      (block
-        (call_expression
-          (member_expression
+    (members
+      (constructor
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (base_type
+              (identifier))))
+        (block
+          (call_expression
             (member_expression
+              (member_expression
+                (identifier)
+                (identifier))
+              (identifier))
+            (arguments
+              (binary_expression
+                (string
+                  (string_content))
+                (number))))))
+      (method
+        (capability)
+        (identifier)
+        (parameters)
+        (base_type
+          (identifier))
+        (block
+          (boolean)))
+      (behavior
+        (identifier)
+        (generic_parameters
+          (generic_parameter
+            (identifier)
+            (base_type
+              (identifier))))
+        (parameters
+          (parameter
+            (identifier)
+            (base_type
+              (identifier)
+              (type_args
+                (base_type
+                  (identifier))))))
+        (block
+          (call_expression
+            (partial_application
               (identifier)
               (identifier))
-            (identifier))
-          (arguments
-            (binary_expression
-              (string
-                (string_content))
-              (number))))))
-    (method
-      (capability)
-      (identifier)
-      (parameters)
-      (base_type
-        (identifier))
-      (block
-        (boolean)))
-    (behavior
-      (identifier)
-      (generic_parameters
-        (generic_parameter
-          (identifier)
-          (base_type
-            (identifier))))
-      (parameters
-        (parameter
-          (identifier)
-          (base_type
-            (identifier)
-            (type_args
-              (base_type
-                (identifier))))))
-      (block
-        (call_expression
-          (partial_application
-            (identifier)
-            (identifier))
-          (arguments
-            (float)))))))
+            (arguments
+              (float))))))))
 
 ======
 MT
@@ -197,52 +199,53 @@ class MT is Random
       (identifier))
     (string
       (string_content))
-    (field
-      (identifier)
-      (base_type
+    (members
+      (field
         (identifier)
-        (type_args
-          (base_type
-            (identifier)))))
-    (field
-      (identifier)
-      (base_type
-        (identifier)))
-    (constructor
-      (identifier)
-      (parameters
-        (parameter
+        (base_type
           (identifier)
-          (base_type
-            (identifier))
-          (number))
-        (parameter
-          (identifier)
-          (base_type
-            (identifier))
-          (number)))
-      (block
-        (string
-          (string_content))
-        (assignment_expression
-          (identifier)
-          (block
-            (call_expression
-              (generic_expression
-                (identifier)
-                (type_args
-                  (base_type
-                    (identifier))))
-              (arguments
-                (call_expression
+          (type_args
+            (base_type
+              (identifier)))))
+      (field
+        (identifier)
+        (base_type
+          (identifier)))
+      (constructor
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (base_type
+              (identifier))
+            (number))
+          (parameter
+            (identifier)
+            (base_type
+              (identifier))
+            (number)))
+        (block
+          (string
+            (string_content))
+          (assignment_expression
+            (identifier)
+            (block
+              (call_expression
+                (generic_expression
                   (identifier)
-                  (arguments))))))
-        (assignment_expression
-          (identifier)
-          (block
-            (call_expression
-              (identifier)
-              (arguments))))))))
+                  (type_args
+                    (base_type
+                      (identifier))))
+                (arguments
+                  (call_expression
+                    (identifier)
+                    (arguments))))))
+          (assignment_expression
+            (identifier)
+            (block
+              (call_expression
+                (identifier)
+                (arguments)))))))))
 
 =========
 Interface
@@ -264,26 +267,27 @@ interface Notify
     (identifier)
     (string
       (string_content))
-    (method
-      (capability)
-      (identifier)
-      (parameters
-        (parameter
-          (identifier)
-          (base_type
-            (identifier)))
-        (parameter
-          (identifier)
-          (base_type
-            (identifier)))
-        (parameter
-          (identifier)
-          (base_type
-            (identifier))))
-      (base_type
-        (identifier))
-      (string
-        (string_content)))))
+    (members
+      (method
+        (capability)
+        (identifier)
+        (parameters
+          (parameter
+            (identifier)
+            (base_type
+              (identifier)))
+          (parameter
+            (identifier)
+            (base_type
+              (identifier)))
+          (parameter
+            (identifier)
+            (base_type
+              (identifier))))
+        (base_type
+          (identifier))
+        (string
+          (string_content))))))
 
 =========
 Annotated

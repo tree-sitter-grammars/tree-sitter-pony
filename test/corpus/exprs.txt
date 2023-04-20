@@ -61,12 +61,13 @@ primitive Snot
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (array_literal)
-        (array_literal)))))
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (array_literal)
+          (array_literal))))))
 
 =======================
 Strings In Block
@@ -82,14 +83,15 @@ primitive Snot
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (string
-          (string_content))
-        (string
-          (string_content))))))
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (string
+            (string_content))
+          (string
+            (string_content)))))))
 
 ===================
 Empty Array Literal
@@ -147,31 +149,32 @@ primitive Foo
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (call_expression
-          (member_expression
-            (generic_expression
-              (identifier)
-              (type_args
-                (base_type
-                  (identifier))))
-            (identifier))
-          (arguments
-            (chain_expression
-              (array_literal
-                (block
-                  (this)))
-              (call_expression
-                (member_expression
-                  (call_expression
-                    (identifier)
-                    (arguments (identifier))
-                  )
-                  (identifier))
-                (arguments)))))))))
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (call_expression
+            (member_expression
+              (generic_expression
+                (identifier)
+                (type_args
+                  (base_type
+                    (identifier))))
+              (identifier))
+            (arguments
+              (chain_expression
+                (array_literal
+                  (block
+                    (this)))
+                (call_expression
+                  (member_expression
+                    (call_expression
+                      (identifier)
+                      (arguments (identifier))
+                    )
+                    (identifier))
+                  (arguments))))))))))
 
 ===================
 Block with ffi call
@@ -187,25 +190,26 @@ primitive Foo
 (source_file
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (block
-        (assignment_expression
-          (variable_declaration
-            (identifier))
-          (block
-            (call_expression
-              (member_expression 
-                (identifier) 
-                (identifier))
-              (arguments))))
-        (call_expression
-          (ffi_identifier
-            (identifier))
-          (arguments
-            (string
-              (string_content))))))))
+    (members
+      (method
+        (identifier)
+        (parameters)
+        (block
+          (assignment_expression
+            (variable_declaration
+              (identifier))
+            (block
+              (call_expression
+                (member_expression 
+                  (identifier) 
+                  (identifier))
+                (arguments))))
+          (call_expression
+            (ffi_identifier
+              (identifier))
+            (arguments
+              (string
+                (string_content)))))))))
 
 
 ============================================
@@ -241,36 +245,37 @@ primitive Foo
       (identifier)))
   (primitive_definition
     (identifier)
-    (method
-      (identifier)
-      (parameters)
-      (base_type
+    (members
+      (method
         (identifier)
-        (type_args
-          (base_type
-            (identifier))))
-      (block
-        (assignment_expression
-          (variable_declaration
-            (identifier)
-            (iso_type
-              (base_type
-                (identifier))))
-          (block
-            (identifier)))
-        (assignment_expression
-          (variable_declaration
-            (identifier)
-            (iso_type
-              (base_type
-                (identifier))))
-          (block
-            (identifier)))
-        (array_literal
-          (base_type
-            (identifier))
-          (block
-            (consume_statement
+        (parameters)
+        (base_type
+          (identifier)
+          (type_args
+            (base_type
+              (identifier))))
+        (block
+          (assignment_expression
+            (variable_declaration
+              (identifier)
+              (iso_type
+                (base_type
+                  (identifier))))
+            (block
+              (identifier)))
+          (assignment_expression
+            (variable_declaration
+              (identifier)
+              (iso_type
+                (base_type
+                  (identifier))))
+            (block
+              (identifier)))
+          (array_literal
+            (base_type
               (identifier))
-            (consume_statement
-              (identifier))))))))
+            (block
+              (consume_statement
+                (identifier))
+              (consume_statement
+                (identifier)))))))))

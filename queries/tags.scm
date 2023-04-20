@@ -20,6 +20,7 @@
 (trait_definition (identifier) @name) @definition.interface
 (interface_definition (identifier) @name) @definition.interface
 
+(constructor (identifier) @name) @definition.method
 (method (identifier) @name) @definition.method
 (behavior (identifier) @name) @definition.method
 
