@@ -21,7 +21,7 @@
     "nan": "^2.17.0"
   },
   "devDependencies": {
-    "eslint": "^8.39.0",
+    "eslint": "^8.40.0",
     "eslint-config-google": "^0.14.0",
     "tree-sitter-cli": "^0.20.8"
   },
@@ -39,6 +39,9 @@
       "injection-regex": "pony",
       "file-types": [
         "pony"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
       ]
     }
   ]

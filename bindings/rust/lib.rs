@@ -33,17 +33,28 @@ pub fn language() -> Language {
     unsafe { tree_sitter_pony() }
 }
 
+/// The source of the Rust tree-sitter grammar description.
+pub const GRAMMAR: &str = include_str!("../../grammar.js");
+
+/// The folds query for this language.
+pub const FOLDS_QUERY: &str = include_str!("../../queries/folds.scm");
+
+/// The syntax highlighting query for this language.
+pub const HIGHLIGHTS_QUERY: &str = include_str!("../../queries/highlights.scm");
+
+/// The indents query for this language.
+pub const INDENTS_QUERY: &str = include_str!("../../queries/indents.scm");
+
+/// The injection query for this language.
+pub const INJECTIONS_QUERY: &str = include_str!("../../queries/injections.scm");
+
+/// The symbol tagging query for this language.
+pub const LOCALS_QUERY: &str = include_str!("../../queries/locals.scm");
+
 /// The content of the [`node-types.json`][] file for this grammar.
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
 pub const NODE_TYPES: &str = include_str!("../../src/node-types.json");
-
-// Uncomment these to include any queries that this grammar contains
-
-// pub const HIGHLIGHTS_QUERY: &'static str = include_str!("../../queries/highlights.scm");
-// pub const INJECTIONS_QUERY: &'static str = include_str!("../../queries/injections.scm");
-// pub const LOCALS_QUERY: &'static str = include_str!("../../queries/locals.scm");
-// pub const TAGS_QUERY: &'static str = include_str!("../../queries/tags.scm");
 
 #[cfg(test)]
 mod tests {
