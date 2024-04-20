@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/tree-sitter-grammars/tree-sitter-pony/compare/v1.0.0...v1.0.1) (2024-04-20)
+
+
+### Bug Fixes
+
+* **grammar:** adapt to upstream regex change ([73ff874](https://github.com/tree-sitter-grammars/tree-sitter-pony/commit/73ff874ae4c9e9b45462673cbc0a1e350e2522a7))
+
 ## 1.0.0 (2023-06-23)
 
 
