@@ -5764,7 +5764,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "u{[0-9a-fA-F]+}"
+                "value": "u\\{[0-9a-fA-F]+\\}"
               },
               {
                 "type": "PATTERN",
@@ -5878,18 +5878,5 @@
     "literal",
     "statement",
     "type"
-  ],
-  "PREC": {
-    "LAMBDA": -2,
-    "PARENTHESES": -1,
-    "ASSIGNMENT": 1,
-    "BINARY": 2,
-    "CAST": 3,
-    "UNARY": 4,
-    "CALL": 5,
-    "MEMBER": 6,
-    "TYPEARGS": 7,
-    "ARRAY_LITERAL": 8
-  }
+  ]
 }
-
